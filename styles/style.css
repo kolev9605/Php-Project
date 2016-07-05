@@ -1,0 +1,53 @@
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    text-align: center;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	text-align: center;
+	opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    text-align: center;
+	opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    text-align: center;
+}
+
+.menu {
+    width: 100%;
+	text-align: right;
+}
+
+.menuItem {
+	display: inline-block;
+	vertical-align:middle;
+	margin-right: 5%;
+}
+
+.icon {
+	width: 30px;
+	height: 30px;
+	vertical-align:bottom;
+}
+
+.icon:hover {
+	background-color:#DDD;
+	cursor: pointer;
+}
+
+#search {
+	height: 24px;
+}
+
+#logo {
+	margin-right: 20%;
+}
+
+#logoText {
+	margin: 0;
+	font-size: 30px;
+}
+
+.icons {
+	display: inline;
+}
