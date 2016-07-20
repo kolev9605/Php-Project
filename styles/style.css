@@ -68,15 +68,53 @@
     font-size: 30px;
 }
 
+a:link {
+    color: black;
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+
 .icons {
     display: inline;
 }
 
-table {
-    border-collapse: collapse;
-    border-style: hidden;
+.dropdown {
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
 }
 
-table td, table th {
-    border: 1px solid black;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    text-align: center;
+    padding: 6px 8px;
+    z-index: 1;
+    right: 1px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: inline-block;
+}
+
+.guest {
+    display: inline-block;
+}
+
+#guestProfile{
+    width: 60px;
+}
+
+#userProfile{
+    width: 90px;
+}
+.user {
+    display: none;
 }

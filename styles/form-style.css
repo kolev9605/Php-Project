@@ -1,0 +1,80 @@
+.wrapper {
+	background: url("../images/background.png") no-repeat center center fixed;
+	background-size: cover;
+}
+
+.user-login-block {
+	background-color: #f7f7f7;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+	margin: 10% auto;
+	width: 35%;
+	height: 55%;
+	padding: 10px;
+	text-align: center;
+}
+
+form {
+	margin: 0 auto;
+	text-align: center;
+	display: block;
+}
+
+.title-form {
+	font: 18px Oswald;
+	font-weight: 400;
+	color: #708b7a;
+	padding: 0 5px 5px;
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+#register-information {
+	font: 24px Oswald;
+	font-weight: 450;
+	color: #708b7a;
+	padding: 0 5px 5px;
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+.submitButton{
+	font: 16px Lato;
+	color: white;
+	background-color: #06504b;
+	padding: 8px;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	border:none;
+	border-radius: 30px;
+	width: 50%;
+}
+
+.submitButton:hover{
+	background-color: #565656;
+}
+
+#register-line {
+	width: 400px;
+}
+
+form input{
+	border-radius: 10px;
+	width: 60%;
+	height: 35px;
+	margin: 0 auto 10px;
+	text-align: center;
+}
+
+form input:focus {
+	font-weight: 100;
+	outline: none;
+	border: 3px solid #06c0ab;
+}
+
+.form-link{
+	text-decoration: none;
+	color: #048e76;
+	font: 16px Lato;
+	font-weight: 900;
+	padding: 10px;
+}
