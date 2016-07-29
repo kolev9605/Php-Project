@@ -1,3 +1,8 @@
+<?php 
+if(!isset($_SESSION)){
+	session_save_path("/home/instacop/tmp");
+	session_start();
+} ?>
 <div class="menuItem" id="logo">
         <a id="logoText" href="index.php">
             Our Teamwork project
@@ -11,7 +16,8 @@
     	<div class="dropdown">
 		<img class="icon" src="images/my-profile-icon.png">
 		<div class="dropdown-content">
-   			<?php if ($this->isLoggedIn) : ?>
+			<?php require_once('autoloader.php');
+   			if ($_SESSION['isLoggedIn']) : ?>
 				<span class = "user" id = "userProfile">
 					<a href="user-profile.php">User profile</a>
 					<br>

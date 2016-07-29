@@ -1,5 +1,5 @@
 <?php
-require_once 'UsersController.php';
+include "UsersController.php";
 
 if (isset($_POST['action'])) {
      $usersController= new UsersController("users", $_POST['action']);

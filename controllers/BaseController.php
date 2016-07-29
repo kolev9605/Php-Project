@@ -1,5 +1,9 @@
-<?php
-include '../models/UsersModel.php';
+<?php 
+if(!isset($_SESSION)){
+	session_save_path("/home/instacop/tmp");
+	session_start();
+}
+include dirname(__FILE__) . '/../models/UsersModel.php';
 
 abstract class BaseController
 {
@@ -7,7 +11,6 @@ abstract class BaseController
     protected $actionName;
     protected $isViewRendered = false;
     protected $isPost = false;
-    protected $isLoggedIn = false;
     protected $title = "";
     protected $model;
     protected $validationErrors = [];
@@ -20,8 +23,6 @@ abstract class BaseController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->isPost = true;
         }
-
-        $this->isLoggedIn = isset($_SESSION['username']);
 
         // Load the default model class for the current controller
         $modelClassName = ucfirst(strtolower($controllerName)) . 'Model';

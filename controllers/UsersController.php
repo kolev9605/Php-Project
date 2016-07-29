@@ -1,9 +1,12 @@
-<?php
-include 'BaseController.php';
+<?php 
+if(!isset($_SESSION)){
+	session_save_path("/home/instacop/tmp");
+	session_start();
+}
+include "BaseController.php";
 
 class UsersController extends BaseController
-{
-
+{    
     public function register(string $username, string $password, string $confirmedPassword)
     {
     	if($this->isPost) 
@@ -44,8 +47,9 @@ class UsersController extends BaseController
     		if($loggedUserId) {
     			$_SESSION['username'] = $username;
     			$_SESSION['user_id'] = $loggedUserId;
-    			$isLoggedIn = true;
+    			$_SESSION['isLoggedIn'] = true;
     			$this->addInfoMessage("Login successful.");
+    			exit();
     		}
     		else {
     			$this->addErrorMessage("Error: login failed!");

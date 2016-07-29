@@ -1,5 +1,8 @@
-<?php
-
+<?php 
+if(!isset($_SESSION)){
+	session_save_path("/home/instacop/tmp");
+	session_start();
+}
 class HomeController extends BaseController
 {
     function index() {
