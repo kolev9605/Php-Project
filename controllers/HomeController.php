@@ -1,17 +1,12 @@
-<?php 
-if(!isset($_SESSION)){
-	session_save_path("/home/instacop/tmp");
-	session_start();
-}
+<?php
+
 class HomeController extends BaseController
 {
     function index() {
-    	$lastPosts = $this-model->getLastPosts(5);
-    	$this-posts = array_slice($lastPosts, 0, 3);
-	$this->sidebarPosts = $lastPosts;
+        // TODO: Load posts to be displayed here ...
     }
 	
-    function view($id) {
-	$this->post = $this->model->getPostById($id);
+	function view($id) {
+        // TODO: Load a post to be displayed here ...
     }
 }

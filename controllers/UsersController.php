@@ -1,64 +1,67 @@
-<?php 
-if(!isset($_SESSION)){
-	session_save_path("/home/instacop/tmp");
-	session_start();
-}
-include "BaseController.php";
+<?php
 
 class UsersController extends BaseController
-{    
-    public function register(string $username, string $password, string $confirmedPassword)
+{
+    public function index()
     {
-    	if($this->isPost) 
-    	{
-    		if(strlen($username) < 2 || strlen($username) > 50) 
-    		{
-    			$this->setValidationError("username", "Invalid username!");
-    		}
-    		if(strlen($password) < 2 || strlen($password) > 50) 
-    		{
-    			$this->setValidationError("password", "Invalid password!");
-		}
-    		if($password != $confirmedPassword) 
-    		{
-    			$this->setValidationError("confirmedPassword", "Passwords do not match");
-    		}    	
-	    	if($this->formValid())
-	    	{
-	    		$userId = $this->model->register($username, $password);
-	    		if($userId)
-	    		{
-	    			$_SESSION['username'] = $username;
-	    			$_SESSION['user_id'] = $userId;
-	    			$this->addInfoMessage("Registration successful.");
-	    		}
-	    		else
-	    		{
-	    			$this->addErrorMessage("Error: user registration failed!");
-	    		}
-	    	}
-    	}
+        $this->authorize();
+        $this->users = $this->model->getAll();
     }
 
-    public function login(string $username, string $password)
+    public function register()
     {
-    	if($this->isPost) {
-    		$loggedUserId= $this->model->login($username, $password);
-    		if($loggedUserId) {
-    			$_SESSION['username'] = $username;
-    			$_SESSION['user_id'] = $loggedUserId;
-    			$_SESSION['isLoggedIn'] = true;
-    			$this->addInfoMessage("Login successful.");
-    			exit();
-    		}
-    		else {
-    			$this->addErrorMessage("Error: login failed!");
-    		}
-    	}
+        if ($this->isPost) {
+            $username = $_POST['register-username'];
+            if (strlen($username) < 2 || strlen($username) > 50) {
+                $this->setValidationError("register-username", "Invalid username!");
+            }
+
+            $password = $_POST['register-password'];
+            if (strlen($username) < 2 || strlen($username) > 50) {
+                $this->setValidationError("register-password", "Invalid password!");
+            }
+
+            $full_name = $_POST['full-name'];
+            if (strlen($username) > 200) {
+                $this->setValidationError("full-name", "Invalid full name!");
+            }
+
+            if ($this->formValid()) {
+                $userId = $this->model->register($username, $password, $full_name);
+                if($userId) {
+                    $_SESSION['username'] = $username;
+                    $_SESSION['user_id'] = $userId;
+                    $this->addInfoMessage('Registration successful.');
+                    $this->redirect("");
+                } else {
+                    $this->addErrorMessage("Error: user registration failed.");
+                }
+            }
+        }
+    }
+
+    public function login()
+    {
+        if ($this->isPost) {
+            $username = $_POST['login-username'];
+            $password = $_POST['login-password'];
+            $loggedUserId = $this->model->login($username, $password);
+            if ($loggedUserId) {
+                $_SESSION['username'] = $username;
+                $_SESSION['user_id'] = $loggedUserId;
+                $this->addInfoMessage("Login successful.");
+
+                return $this->redirect("");
+            } else {
+                $this->addErrorMessage("Error. Login failed.");
+            }
+        }
     }
 
     public function logout()
     {
-		// TODO: your user logout functionality will come here ...
+        session_destroy();
+        $this->addInfoMessage("Logout successful.");
+        $this->redirect("");
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-define('APP_ROOT', '/public_html');
+define('APP_ROOT', '/project');
 
 define('DEFAULT_CONTROLLER', 'home');
 define('DEFAULT_ACTION', 'index');
 
 define('DB_HOST', 'localhost');
-define('DB_USER', 'instacop');
-define('DB_PASS', 'z4Vsz8KUc~-N');
-define('DB_NAME', 'instacop_Database');
+define('DB_USER', 'root');
+define('DB_PASS', '');
+define('DB_NAME', 'teamwork');
