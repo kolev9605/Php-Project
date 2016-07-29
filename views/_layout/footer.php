@@ -1,7 +1,4 @@
 
-    <footer>
-        Project footer
-    </footer>
 
     <?php require_once('fill-posted-fields.php'); ?>
 

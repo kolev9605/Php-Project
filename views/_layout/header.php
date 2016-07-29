@@ -23,25 +23,25 @@
         <div class="dropdown">
             <img class="icon" src="<?= APP_ROOT ?>/content/images/my-profile-icon.png">
             <div class="dropdown-content">
+				<div class="menuItem">
+					<?php if ($this->isLoggedIn) : ?>
+					<!-- The user actions we will add later on-->
+					<?php else: ?>
+						<a href="<?=APP_ROOT?>/users/login">Login</a>
+						<a href="<?=APP_ROOT?>/users/register">Register</a>
+					<?php endif; ?>
+
+					<?php if ($this->isLoggedIn) : ?>
+						<div id="logged-in-info">
+							<a href="<?=APP_ROOT?>/users/user-profile">User Profile</a>
+							<form method="post" action="<?=APP_ROOT?>/users/logout">
+								<input id = "logout-button" type="submit" value="Logout"/>
+							</form>
+						</div>
+					<?php endif; ?>
+				</div>
             </div>
         </div>
-    </div>
-    <div class="menuItem">
-        <?php if ($this->isLoggedIn) : ?>
-        <!-- The user actions we will add later on-->
-        <?php else: ?>
-            <a href="<?=APP_ROOT?>/users/login">Login</a>
-            <a href="<?=APP_ROOT?>/users/register">Register</a>
-        <?php endif; ?>
-
-        <?php if ($this->isLoggedIn) : ?>
-            <div id="logged-in-info">
-                <span>Hello, <b><?=htmlspecialchars($_SESSION['username'])?></b></span>
-                <form method="post" action="<?=APP_ROOT?>/users/logout">
-                    <input type="submit" value="Logout"/>
-                </form>
-            </div>
-        <?php endif; ?>
     </div>
     <hr>
 </header>

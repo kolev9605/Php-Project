@@ -1,10 +1,8 @@
 <?php $this->title = 'Register New User'; ?>
-
-<h1><?= htmlspecialchars($this->title) ?></h1>
-
-<nav class="menu" id="navigation">
-</nav>
 <div class="user-login-block">
+
+	<h1><?= htmlspecialchars($this->title) ?></h1>
+
     <form method="post" id="register-form">
         <h1 id="register-information">Register and join your friends by sharing pictures and commenting.</h1>
         <hr id="register-line">
