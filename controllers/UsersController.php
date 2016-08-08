@@ -58,6 +58,11 @@ class UsersController extends BaseController
         }
     }
 
+    public function userProfile()
+    {
+	
+    }
+
     public function logout()
     {
         session_destroy();
