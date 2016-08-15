@@ -134,7 +134,7 @@ a:visited {
     text-align: center;
 }
 
-form {
+#login-form, #register-form {
     margin: 0 auto;
     text-align: center;
     display: block;
@@ -178,7 +178,7 @@ form {
     width: 400px;
 }
 
-form input {
+#login-form  input,#register-form input {
     border-radius: 10px;
     width: 60%;
     height: 35px;
@@ -186,7 +186,7 @@ form input {
     text-align: center;
 }
 
-form input:focus {
+#login-form input,#register-form input:focus {
     font-weight: 100;
     outline: none;
     border: 3px solid #06c0ab;
@@ -218,4 +218,53 @@ form input:focus {
 #logout-button:focus {
     outline: none;
     border: none;
+}
+
+/*Copied from bootstrap */
+ .btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+/*Also */
+ .btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+/* This is copied from https://github.com/blueimp/jQuery-File-Upload/blob/master/css/jquery.fileupload.css */
+ .fileinput-button {
+    position: relative;
+    overflow: hidden;
+}
+/*Also*/
+ .fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter:'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+}
+
+#out-image {
+	width:256px;
+	display:none;
 }

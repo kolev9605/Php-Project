@@ -11,11 +11,10 @@ class PostsModel extends BaseModel
 	
     }
 	
-	public function create(string $title, string $content, int $user_id) : bool {
-		echo $title . " " . $content . " " . $user_id;
+	public function create(string $title, string $imageSource, int $user_id) : bool {
 		$statement = self::$db->prepare(
-			"INSERT INTO posts(title, content, user_id) VALUES(?, ?, ?)");
-		$statement->bind_param("ssi", $title, $content, $user_id);
+			"INSERT INTO posts(title, imageLocation, user_id) VALUES(?, ?, ?)");
+		$statement->bind_param("ssi", $title, $imageSource, $user_id);
 		$statement->execute();
 		return $statement->affected_rows == 1;
     }

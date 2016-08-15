@@ -2,12 +2,15 @@
 
 <h1><?=htmlspecialchars($this->title)?></h1>
 
-<form method="post">
-	<div>Title:</div>
-	<input type="text" name = "post_title" />
-	<div>Content:</div>
-	<textarea rows = "10" name = "post_content"></textarea>
-	<div><input type = "submit" value = "Create" />
-		<a href="<?=APP_ROOT?>/posts">[Cancel]</a>
-	</div>
-</form>
+<div>
+	Title:
+	
+	<form action="create" method="post" enctype="multipart/form-data">
+		<input type="text" name="post-title"/>
+		<br>
+		Select image to upload:
+		<br>
+		<input type="file" name="fileToUpload" id="fileToUpload">
+		<input type="submit" value="Upload Image" name="submit">
+	</form>
+</div>
