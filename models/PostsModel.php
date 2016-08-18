@@ -4,6 +4,7 @@ class PostsModel extends BaseModel
 {
     public function getAll() : array {
 		$statement = self::$db->query("SELECT * FROM posts ORDER BY date DESC");
+		
 		return $statement->fetch_all(MYSQLI_ASSOC);
     }
 	

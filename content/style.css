@@ -264,7 +264,6 @@ a:visited {
     cursor: pointer;
 }
 
-#out-image {
+.post-image {
 	width:256px;
-	display:none;
 }

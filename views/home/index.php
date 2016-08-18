@@ -5,8 +5,8 @@
 <main id="posts">
 	<article>
 		<?php foreach ($this->posts as $post) : ?>
-			<h2 class = "title"><?=htmlentities($post['title'])?></h2
-			<h2 class = "title"><?=htmlentities($post['image'])?></h2>
+			<h2 class = "title"><?=htmlentities($post['title'])?></h2>
+			<img class = "post-image" src = "<?= UPLOADS . "/" . htmlentities($post['imageLocation'])?>">
 			<div class ="date"><i>Posted on</i>
 				<?=(new DateTime($post['date']))->format('d-M-Y')?>
 			</div>
