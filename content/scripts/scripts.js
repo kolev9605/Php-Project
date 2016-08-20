@@ -21,24 +21,17 @@ function showValidationError(fieldName, errorMsg) {
 }
 
 $(function() {
-	if(document.getElementById("fileUpload"))
-	{
-		document.getElementById('fileUpload').onchange = function (evt) {
-			var tgt = evt.target || window.event.srcElement,
-				files = tgt.files;
-
-			if (FileReader && files && files.length) {
-				var fr = new FileReader();
-				fr.onload = function () {
-					document.getElementById('out-image').src = fr.result;
-					document.getElementById('out-image').style.display = "block";
-				}
-				fr.readAsDataURL(files[0]);
-			}
-
-			else {
-			
-			}
-		}
-	}
+	$(":file").filestyle({buttonText: "Find file"});
 });
+
+function showImage(imageContainerID, showButtonID, hideButtonID)
+{
+	window.open('posts', '_blank');
+}
+
+function hideImage(imageContainerID, showButtonID, hideButtonID)
+{
+	$(hideButtonID).hide();
+	$(showButtonID).show();
+	$(imageContainerID).height("200");
+}

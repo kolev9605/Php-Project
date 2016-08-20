@@ -10,7 +10,8 @@
 		<br>
 		Select image to upload:
 		<br>
-		<input type="file" name="fileToUpload" id="fileToUpload">
+		<input type="file" class="filestyle" data-buttontext="Find file" id="filestyle-2" tabindex="-1" name="fileToUpload" id="fileToUpload">
+		
 		<input type="submit" value="Upload Image" name="submit">
 	</form>
 </div>

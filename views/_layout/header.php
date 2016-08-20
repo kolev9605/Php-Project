@@ -4,6 +4,8 @@
 <head>
     <link rel="stylesheet" href="<?= APP_ROOT ?>/content/style.css"/>
     <script src="<?= APP_ROOT ?>/content/scripts/jquery-3.0.0.min.js"></script>
+    <script src="<?= APP_ROOT ?>/content/scripts/bootstrap.min.js"></script>
+    <script src="<?= APP_ROOT ?>/content/scripts/bootstrap-filestyle.min.js"></script>
     <script src="<?= APP_ROOT ?>/content/scripts/scripts.js"></script>
     <title><?php if (isset($this->title)) echo htmlspecialchars($this->title) ?></title>
 </head>

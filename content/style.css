@@ -264,6 +264,37 @@ a:visited {
     cursor: pointer;
 }
 
+.post-image-container {
+	width: 400px;
+	height: 200px; 
+	overflow: hidden;
+}
+
 .post-image {
-	width:256px;
+	width: 400px;
+}
+
+.post {
+    width: 60%;
+    margin: 0 auto; 
+}
+
+.post-title {
+	text-align:left;
+}
+
+.filestyle {
+	position: absolute; 
+	clip: rect(0px 0px 0px 0px);
+}
+
+.content-button {
+	margin-left: 156px;
+	background-color: #4C50AF;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
