@@ -29,9 +29,6 @@ function showImage(imageContainerID, showButtonID, hideButtonID)
 	window.open('posts', '_blank');
 }
 
-function hideImage(imageContainerID, showButtonID, hideButtonID)
-{
-	$(hideButtonID).hide();
-	$(showButtonID).show();
-	$(imageContainerID).height("200");
-}
+$.fn.scrollBottom = function() { 
+  return $(document).height() - this.scrollTop() - this.height(); 
+};

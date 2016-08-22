@@ -26,8 +26,13 @@ class PostsController extends BaseController
 				$index++;
 				$target_file = $target_dir . $index . basename($_FILES["fileToUpload"]["name"]);
 			}
+			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+			&& $imageFileType != "gif" ) {
+				$this->setValidationError("imageLocation", "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+				$uploadOk = 0;
+			}
 			// Check if image file is a actual image or fake image
-			if(isset($_POST["submit"]) && strlen(basename( $_FILES["fileToUpload"]["name"])) > 0) {
+			if(isset($_POST["submit"]) && strlen(basename( $_FILES["fileToUpload"]["name"])) > 0 && $uploadOk) {
 				$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 				if($check !== false) {
 					echo $_POST["submit"];
@@ -36,11 +41,6 @@ class PostsController extends BaseController
 					$this->setValidationError("imageLocation", "File is not an image.");
 					$uploadOk = 0;
 				}
-			}
-			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-			&& $imageFileType != "gif" ) {
-				$this->setValidationError("imageLocation", "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
-				$uploadOk = 0;
 			}
 			// Check if $uploadOk is set to 0 by an error
 			if ($uploadOk == 0) {

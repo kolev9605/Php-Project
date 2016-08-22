@@ -2,12 +2,12 @@
 
 class HomeModel extends BaseModel
 {
-    public function getLastPosts(int $maxCount = 10) : array
+    public function getLastPosts() : array
 	{
 		$statement = self::$db->query(
 			"SELECT posts.id, title, imageLocation, date " .
 			"FROM posts LEFT JOIN users ON posts.user_id = users.id " .
-			"ORDER BY date DESC LIMIT $maxCount");
+			"ORDER BY date DESC");
 		return $statement->fetch_all(MYSQLI_ASSOC);
 	}
 	
