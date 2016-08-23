@@ -268,6 +268,7 @@ a:visited {
 	width: 400px;
 	height: 200px; 
 	overflow: hidden;
+	display:inline-block;
 }
 
 .post-image {
@@ -297,4 +298,22 @@ a:visited {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+
+.vote {
+	margin-left: 10px;
+	text-align: center;
+	display:inline-block;
+}
+
+.arrow {
+	width:25px;
+}
+
+#upArrow {
+	margin-left:4px;
+}
+
+.voteNumber {
+	margin-left:4px;
 }

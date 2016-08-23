@@ -24,9 +24,16 @@ $(function() {
 	$(":file").filestyle({buttonText: "Find file"});
 });
 
-function showImage(imageContainerID, showButtonID, hideButtonID)
+function showImage(post)
 {
-	window.open('posts', '_blank');
+	$.ajax({
+	  type: "POST",
+	  url: "posts",
+	  data: { post: post }
+	}).done(function( msg ) {
+		var myWindow = window.open('posts', '_blank');
+		myWindow.document.write(msg);
+	});    
 }
 
 $.fn.scrollBottom = function() { 

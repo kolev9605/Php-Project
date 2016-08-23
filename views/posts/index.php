@@ -1,6 +1,6 @@
 <?php $this->title = 'Posts'; ?>
 
-<?php $post = $_SESSION['post'];?>
+<?php $post = $_POST['post'];?>
 
 <article class = "viewedPost">
 	<h2 class = "post-title"><?=htmlentities($post['title'])?></h2>

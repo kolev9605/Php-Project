@@ -26,8 +26,7 @@ class PostsController extends BaseController
 				$index++;
 				$target_file = $target_dir . $index . basename($_FILES["fileToUpload"]["name"]);
 			}
-			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-			&& $imageFileType != "gif" ) {
+			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
 				$this->setValidationError("imageLocation", "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
 				$uploadOk = 0;
 			}
@@ -70,6 +69,21 @@ class PostsController extends BaseController
     }
 	
 	public function delete(int $id) {
-	
+		if($this->isPost) {
+			if($this->model->delete($id)) {
+				$this->addInfoMessage("Post deleted.");
+			} else {
+				$this->addErrorMessage("Error: cannot delete post.");
+			}
+			$this->redirect('home');
+		}
+		else {
+			$post = $this->model->getById($id);
+			if(!$post) {
+				$this->addErrorMessage("Error: post does not exist.");
+				$this->redirect('home');
+			}
+			$this->post = $post;
+		}
     }
 }
