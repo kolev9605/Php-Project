@@ -58,7 +58,11 @@ class HomeModel extends BaseModel
 	
 	function showPost($post, &$index, &$startIndex)
 	{ 
-		$loggedUser = $this->getUser($_SESSION['user_id']);
+		$loggedUser = "";
+		if(isset($_SESSION['user_id']))
+		{
+			$loggedUser = $this->getUser($_SESSION['user_id']);
+		}
 		?>
 		<div class = "postContainer">
 			<?php 
@@ -68,7 +72,7 @@ class HomeModel extends BaseModel
 			
 			<?php $this->showImage($post, $index) ?>
 			
-			<?php $this->showVote($post) ?>
+			<?php $this->showVote($post, $loggedUser, $index) ?>
 			
 			<div class ="date">
 				<i>Posted on</i>
@@ -87,7 +91,7 @@ class HomeModel extends BaseModel
 			</div>
 			
 			<?php 
-			if ($loggedUser['is_admin'] == 1) : ?>
+			if (isset($loggedUser['is_admin']) && $loggedUser['is_admin'] == 1) : ?>
 					<a href="<?=APP_ROOT?>/posts/delete/<?=$post['id']?>">Delete post</a>
 			<?php endif; ?>
 			<hr>
@@ -120,15 +124,18 @@ class HomeModel extends BaseModel
 		<?php endif;
 	}
 	
-	function showVote($post) 
+	function showVote($post, $loggedUser, $index) 
 	{ ?>
 		<div class = "vote">
-			<img class = "arrow" id = "upArrow" src = "<?= APP_ROOT ?>/content/images/arrow-rotated.png">
+			<img class = "arrow" id = "upArrow" src = "<?= APP_ROOT ?>/content/images/arrow-rotated.png" 
+				onclick = 'vote(<?php echo isset($_SESSION["username"]); ?>, "<?php echo APP_ROOT . "/users/login"; ?>",
+				<?php echo json_encode($post); ?>, <?php echo json_encode($loggedUser); ?>, true, "voteNumber_<?php echo $index ?>");'>
 			<br>
-			<span class = "voteNumber"><?php echo $post['votes']?></span>
+			<span class = "voteNumber" id = "voteNumber_<?php echo $index ?>"><?php echo $post['votes']; ?></span>
 			<br>
-			<img class = "arrow" src = "<?= APP_ROOT ?>/content/images/arrow.png">
+			<img class = "arrow" id = "downArrow "src = "<?= APP_ROOT ?>/content/images/arrow.png" 
+				onclick = 'vote(<?php echo isset($_SESSION["username"]); ?>, "<?php echo APP_ROOT . "/users/login"; ?>",
+				<?php echo json_encode($post); ?>, <?php echo json_encode($loggedUser); ?>, false, "voteNumber_<?php echo $index ?>");'>
 		</div>
-	<?php
-	 }
+	 <?php }
 }
