@@ -64,8 +64,12 @@ class PostsController extends BaseController
 		}
     }
 	
-	public function edit(int $id) {
+	public function getUserById(int $id) {
+		return $this->model->getUserById($id);
+	}
 	
+	public function getPostById(int $id) {
+		return $this->model->getById($id);
     }
 	
 	public function delete(int $id) {
@@ -86,4 +90,19 @@ class PostsController extends BaseController
 			$this->post = $post;
 		}
     }
+	
+	public function comments($post)
+	{
+		return $this->model->getAllComments($post);
+	}
+	
+	public function showVote($post, $loggedUser, $index)
+	{
+		$this->model->showVote($post, $loggedUser, $index);
+	}
+	
+	public function showComment($comment)
+	{	
+		$this->model->showComment($comment);
+	}
 }

@@ -1,12 +1,34 @@
 <?php $this->title = 'Posts'; ?>
 
-<?php $post = $_POST['post'];?>
+<?php $postID = $_SERVER['QUERY_STRING']; 
+
+$post = $this->getPostById($postID);?>
 
 <article class = "viewedPost">
-	<h2 class = "post-title"><?=htmlentities($post['title'])?></h2>
+	<h2 class = "post-title"><?=htmlentities($post['title'])?></h2> 
+	<?php 
+	$loggedUser = "";
+	if(isset($_SESSION['user_id']))
+	{
+		$loggedUser = $this->getUserById($_SESSION['user_id']);
+	}
+	
+	$this->showVote($post, $loggedUser, 0) ?>
 	<img class = "post-image" src = "<?= UPLOADS . "/" . htmlentities($post['imageLocation'])?>">
 	<div class ="date">
 		<i>Posted on</i>
 		<?=(new DateTime($post['date']))->format('d-M-Y')?>
 	</div>
+	<?php if(isset($_SESSION["username"])) : ?>
+		<textarea class = "commentField" type="text" rows = "5" id = "commentContent" name = "commentContent" placeholder = "Add your comment here"></textarea>
+		<br>
+		<button class="commentSubmit" 
+		onclick='addComment(<?php echo json_encode($post); ?> )'>Comment</button>
+	<?php endif;
+	$comments = $this->comments($post);
+	foreach ($comments as $comment)
+	{
+		$this->showComment($comment);
+	}
+	?>
 <article>

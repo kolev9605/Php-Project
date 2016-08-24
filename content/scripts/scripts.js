@@ -24,23 +24,16 @@ $(function() {
 	$(":file").filestyle({buttonText: "Find file"});
 });
 
-function showImage(post)
+function showImage(postID)
 {
-	$.ajax({
-	  type: "POST",
-	  url: "posts",
-	  data: { post: post }
-	}).done(function( msg ) {
-		var myWindow = window.open('posts', '_blank');
-		myWindow.document.write(msg);
-	});    
+	window.open("posts?" + postID);
 }
 
 $.fn.scrollBottom = function() { 
   return $(document).height() - this.scrollTop() - this.height(); 
 };
 
-function vote(loggedIn, loginPage, post, loggedUser, isUpVote, voteNumberID)
+function vote(loggedIn, loginPage, post, loggedUser, isUpVote, voteNumberID, imagesFolder, index)
 {
 	if(loggedIn)
 	{
@@ -55,9 +48,35 @@ function vote(loggedIn, loginPage, post, loggedUser, isUpVote, voteNumberID)
 		  }
 		}).done(function( msg ) {
 			$("#" + voteNumberID).text(msg.substr(0, msg.indexOf('\n')));
+			if(isUpVote)
+			{
+				$("#upArrow_" + index).attr("src", imagesFolder + "upvote-arrow.png");
+				$("#downArrow_" + index).attr("src", imagesFolder + "arrow.png");
+			}
+			else
+			{
+				$("#upArrow_" + index).attr("src", imagesFolder + "arrow-rotated.png");
+				$("#downArrow_" + index).attr("src", imagesFolder + "downvote-arrow.png");
+			}
 		});
 	}
 	else {
 		window.location.href = loginPage;
 	}
+}
+
+function addComment(post)
+{
+	var content=$('#commentContent').val();
+	$.ajax({
+		  type: "POST",
+		  url: "comment",
+		  data:
+		  {
+			post: post,
+			content: content
+		  }
+		}).done(function( msg ) {
+			location.reload();
+		});
 }

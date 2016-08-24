@@ -4,7 +4,7 @@ class VoteModel extends BaseModel
 {
     public function getVote($post, $loggedUser) {
 		$statement = self::$db->prepare(
-            "SELECT * FROM votes WHERE votes.user_id = ? AND votes.comment_id = ?"
+            "SELECT * FROM votes WHERE votes.user_id = ? AND votes.post_id = ?"
         );
 
         $statement->bind_param("ii", $loggedUser['id'], $post['id']);
@@ -21,7 +21,7 @@ class VoteModel extends BaseModel
 			$isUpVoteAsInt = 1;
 		}
 		$statement = self::$db->prepare(
-            "INSERT INTO votes (votes.user_id, votes.comment_id, votes.is_positive) VALUES (?,?,?)"
+            "INSERT INTO votes (votes.user_id, votes.post_id, votes.is_positive) VALUES (?,?,?)"
         );
 		
         $statement->bind_param("iii", $loggedUser['id'], $post['id'], $isUpVoteAsInt);
