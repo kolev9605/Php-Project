@@ -26,7 +26,7 @@ function parseRequest() : array
     if (count($requestParts) >= 3 && $requestParts[2] != '') {
         $action = $requestParts[2];
     }
-
+	
     // Extract the action parameters from {controller}/{action}/{params}
     $params = array_splice($requestParts, 3);
 

@@ -48,13 +48,15 @@ class PostsModel extends ShowVoteModel
 		return $statement->affected_rows == 1;
     }
 	
-    public function getAllComments() : array {
-		$statement = self::$db->query("SELECT * FROM comments ORDER BY comments.date DESC");
+    public function getAllComments($post) {
+		$statement = self::$db->prepare("SELECT * FROM comments WHERE comments.post_id = ? ORDER BY comments.date DESC");
+		$statement->bind_param("i", $post['id']);
+		$statement->execute();
 		
-		return $statement->fetch_all(MYSQLI_ASSOC);
+		return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 	
-	public function showComment($comment, $loggedUser, $index)
+	public function showComment($post, $comment, $loggedUser, $index)
 	{ ?>
 		<h4><?php echo $_SESSION['username'] ?> Posted:</h4>
 		<div class = "commentText">

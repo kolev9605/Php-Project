@@ -26,11 +26,17 @@ $post = $this->getPostById($postID);?>
 		onclick='addComment(<?php echo json_encode($post); ?> )'>Comment</button>
 	<?php endif;
 	$comments = $this->comments($post);
-		$index = 1;
-	foreach ($comments as $comment)
+	$index = 1;
+	if(isset($comments))
 	{
-		$this->showComment($comment, $loggedUser, $index);
-		$index++;
+		foreach ($comments as $comment)
+		{
+			$this->showComment($post, $comment, $loggedUser, $index);
+			$index++;
+		}
 	}
-	?>
+	else
+	{ ?>
+		<h3>There are no comments on this post. Be the first to comment.</h3>
+	<?php }	?>
 <article>
