@@ -33,16 +33,16 @@ $.fn.scrollBottom = function() {
   return $(document).height() - this.scrollTop() - this.height(); 
 };
 
-function vote(loggedIn, loginPage, post, loggedUser, isUpVote, voteNumberID, imagesFolder, index)
+function vote(loggedIn, loginPage, voteObject, loggedUser, isUpVote, voteNumberID, imagesFolder, index, url)
 {
 	if(loggedIn)
 	{
 		$.ajax({
 		  type: "POST",
-		  url: "vote",
+		  url: url,
 		  data:
 		  {
-			post: post,
+			voteObject: voteObject,
 			loggedUser: loggedUser,
 			isUpVote: isUpVote
 		  }

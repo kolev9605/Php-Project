@@ -1,6 +1,6 @@
 <?php
 
-class HomeModel extends BaseModel
+class HomeModel extends ShowVoteModel
 {
     public function getLastPosts() : array
 	{
@@ -72,7 +72,7 @@ class HomeModel extends BaseModel
 			
 			<?php $this->showImage($post, $index) ?>
 			
-			<?php $this->showVote($post, $loggedUser, $index) ?>
+			<?php $this->showVote($post, $loggedUser, $index, "votes") ?>
 			
 			<div class ="date">
 				<i>Posted on</i>
@@ -122,62 +122,5 @@ class HomeModel extends BaseModel
 				<img class = "post-image" src = "<?= $imageLocation?>">
 			</div>
 		<?php endif;
-	}
-	
-	function showVote($post, $loggedUser, $index) 
-	{ ?>
-		<div class = "vote">
-			<?php 
-			$vote = $this->vote($post, $loggedUser);
-			$normalUpArrowPath = APP_ROOT . "/content/images/arrow-rotated.png";
-			$normalDownArrowPath = APP_ROOT . "/content/images/arrow.png";
-			$colouredUpArrowPath = APP_ROOT . "/content/images/upvote-arrow.png";
-			$colouredDownArrowPath = APP_ROOT . "/content/images/downvote-arrow.png";
-			if(isset($vote))
-			{
-				$voteIsPositive = $vote['is_positive'];
-				if($voteIsPositive)
-				{
-					$this->showVoteImages($colouredUpArrowPath, $normalDownArrowPath, $post, $loggedUser, $index);
-				}
-				else 
-				{
-					$this->showVoteImages($normalUpArrowPath, $colouredDownArrowPath, $post, $loggedUser, $index);
-				}
-			} 
-			else 
-			{
-				$this->showVoteImages($normalUpArrowPath, $normalDownArrowPath, $post, $loggedUser, $index);
-			}?>
-		</div>
-		<?php 
-	}
-	
-	function showVoteImages($upArrowImage, $downArrowImage, $post, $loggedUser, $index)
-	{ ?>
-		<img class = "arrow" id = "upArrow_<?php echo $index ?>" src = "<?php echo $upArrowImage; ?>" 
-				onclick = 'vote(<?php echo isset($_SESSION["username"]); ?>, "<?php echo APP_ROOT . "/users/login"; ?>",
-				<?php echo json_encode($post); ?>, <?php echo json_encode($loggedUser); ?>, true, 
-				"voteNumber_<?php echo $index ?>", "<?php echo APP_ROOT ?>/content/images/", <?php echo $index ?>);'>
-		<br>
-		<span class = "voteNumber" id = "voteNumber_<?php echo $index ?>"><?php echo $post['votes']; ?></span>
-		<br>
-		<img class = "arrow" id = "downArrow_<?php echo $index ?>" src = "<?php echo $downArrowImage ?>" 
-			onclick = 'vote(<?php echo isset($_SESSION["username"]); ?>, "<?php echo APP_ROOT . "/users/login"; ?>",
-			<?php echo json_encode($post); ?>, <?php echo json_encode($loggedUser); ?>, false, 
-				"voteNumber_<?php echo $index ?>", "<?php echo APP_ROOT ?>/content/images/", <?php echo $index ?>);'>
-	<?php }
-	
-	function vote($post, $loggedUser)
-	{
-		$statement = self::$db->prepare(
-            "SELECT * FROM votes WHERE votes.user_id = ? AND votes.post_id = ?"
-        );
-
-        $statement->bind_param("ii", $loggedUser['id'], $post['id']);
-        $statement->execute();
-		
-		$result = $statement->get_result()->fetch_assoc();
-		return $result;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-class PostsModel extends BaseModel
+class PostsModel extends ShowVoteModel
 {
     public function getAll() : array {
 		$statement = self::$db->query("SELECT * FROM posts ORDER BY posts.date DESC");
@@ -54,65 +54,7 @@ class PostsModel extends BaseModel
 		return $statement->fetch_all(MYSQLI_ASSOC);
     }
 	
-	function showVote($post, $loggedUser, $index) 
-	{ ?>
-		<div class = "vote">
-			<?php 
-			$vote = $this->vote($post, $loggedUser);
-			$normalUpArrowPath = APP_ROOT . "/content/images/arrow-rotated.png";
-			$normalDownArrowPath = APP_ROOT . "/content/images/arrow.png";
-			$colouredUpArrowPath = APP_ROOT . "/content/images/upvote-arrow.png";
-			$colouredDownArrowPath = APP_ROOT . "/content/images/downvote-arrow.png";
-			if(isset($vote))
-			{
-				$voteIsPositive = $vote['is_positive'];
-				if($voteIsPositive)
-				{
-					$this->showVoteImages($colouredUpArrowPath, $normalDownArrowPath, $post, $loggedUser, $index);
-				}
-				else 
-				{
-					$this->showVoteImages($normalUpArrowPath, $colouredDownArrowPath, $post, $loggedUser, $index);
-				}
-			} 
-			else 
-			{
-				$this->showVoteImages($normalUpArrowPath, $normalDownArrowPath, $post, $loggedUser, $index);
-			}?>
-		</div>
-		<?php 
-	}
-	
-	function showVoteImages($upArrowImage, $downArrowImage, $post, $loggedUser, $index)
-	{ ?>
-		<img class = "arrow" id = "upArrow_<?php echo $index ?>" src = "<?php echo $upArrowImage; ?>" 
-				onclick = 'vote(<?php echo isset($_SESSION["username"]); ?>, "<?php echo APP_ROOT . "/users/login"; ?>",
-				<?php echo json_encode($post); ?>, <?php echo json_encode($loggedUser); ?>, true, 
-				"voteNumber_<?php echo $index ?>", "<?php echo APP_ROOT ?>/content/images/", <?php echo $index ?>);'>
-		<br>
-		<span class = "voteNumber" id = "voteNumber_<?php echo $index ?>"><?php echo $post['votes']; ?></span>
-		<br>
-		<img class = "arrow" id = "downArrow_<?php echo $index ?>" src = "<?php echo $downArrowImage ?>" 
-			onclick = 'vote(<?php echo isset($_SESSION["username"]); ?>, "<?php echo APP_ROOT . "/users/login"; ?>",
-			<?php echo json_encode($post); ?>, <?php echo json_encode($loggedUser); ?>, false, 
-				"voteNumber_<?php echo $index ?>", "<?php echo APP_ROOT ?>/content/images/", <?php echo $index ?>);'>
-	<?php 
-	}
-	
-	function vote($post, $loggedUser)
-	{
-		$statement = self::$db->prepare(
-            "SELECT * FROM votes WHERE votes.user_id = ? AND votes.post_id = ?"
-        );
-
-        $statement->bind_param("ii", $loggedUser['id'], $post['id']);
-        $statement->execute();
-		
-		$result = $statement->get_result()->fetch_assoc();
-		return $result;
-	}
-	
-	public function showComment($comment)
+	public function showComment($comment, $loggedUser, $index)
 	{ ?>
 		<h4><?php echo $_SESSION['username'] ?> Posted:</h4>
 		<div class = "commentText">
@@ -121,7 +63,10 @@ class PostsModel extends BaseModel
 		<br>
 		<div class ="date">
 			<i>Posted on</i>
-			<?=(new DateTime($comment['date']))->format('d-M-Y')?>			
+			<?=(new DateTime($comment['date']))->format('d-M-Y')?>
 		</div>
+		<?php 
+		$this->showVote($comment, $loggedUser, $index, "commentvotes") ?>
+		<hr>
 	<?php }
 }

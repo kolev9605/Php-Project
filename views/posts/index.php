@@ -13,7 +13,7 @@ $post = $this->getPostById($postID);?>
 		$loggedUser = $this->getUserById($_SESSION['user_id']);
 	}
 	
-	$this->showVote($post, $loggedUser, 0) ?>
+	$this->showVote($post, $loggedUser, 0, "votes") ?>
 	<img class = "post-image" src = "<?= UPLOADS . "/" . htmlentities($post['imageLocation'])?>">
 	<div class ="date">
 		<i>Posted on</i>
@@ -26,9 +26,11 @@ $post = $this->getPostById($postID);?>
 		onclick='addComment(<?php echo json_encode($post); ?> )'>Comment</button>
 	<?php endif;
 	$comments = $this->comments($post);
+		$index = 1;
 	foreach ($comments as $comment)
 	{
-		$this->showComment($comment);
+		$this->showComment($comment, $loggedUser, $index);
+		$index++;
 	}
 	?>
 <article>

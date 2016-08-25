@@ -306,8 +306,21 @@ a:visited {
 	display:inline-block;
 }
 
-.arrow {
+.upArrow {
+	margin-left:4px;
 	width:25px;
+}
+
+.Arrow {
+	width:25px;
+}
+
+.upcommentArrow {
+	width:15px;
+}
+
+.commentArrow {
+	width:15px;
 }
 
 #upArrow {

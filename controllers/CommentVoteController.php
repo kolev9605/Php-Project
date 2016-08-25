@@ -1,20 +1,20 @@
 <?php
 
-class VoteController extends BaseController
+class CommentVoteController extends BaseController
 {
     function onInit() {
-		$post = $_POST['voteObject'];
+		$comment = $_POST['voteObject'];
 		$loggedUser = $_POST['loggedUser'];
 		$isUpVote = true;
 		if($_POST['isUpVote'] == "false")
 		{
 			$isUpVote = false;
 		}
-		$vote = $this->model->getVote($post, $loggedUser);
+		$vote = $this->model->getVote($comment, $loggedUser);
 		$voteChange = 1;
 		if(!isset($vote))
 		{
-			$this->model->createVote($post, $loggedUser, $isUpVote);
+			$this->model->createVote($comment, $loggedUser, $isUpVote);
 		}
 		else
 		{
@@ -53,8 +53,8 @@ class VoteController extends BaseController
 			}
 		}
 		
-		$newVotes = $this->model->getPostVotes($post['id']) + $voteChange;
-		$this->model->vote($post, $isUpVote, $newVotes);
+		$newVotes = $this->model->getCommentVotes($comment['id']) + $voteChange;
+		$this->model->vote($comment, $isUpVote, $newVotes);
 		echo $newVotes . "\n";
     }
 }

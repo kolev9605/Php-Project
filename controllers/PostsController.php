@@ -98,11 +98,11 @@ class PostsController extends BaseController
 	
 	public function showVote($post, $loggedUser, $index)
 	{
-		$this->model->showVote($post, $loggedUser, $index);
+		$this->model->showVote($post, $loggedUser, $index, "votes");
 	}
 	
-	public function showComment($comment)
+	public function showComment($comment, $loggedUser, $index)
 	{	
-		$this->model->showComment($comment);
+		$this->model->showComment($comment, $loggedUser, $index);
 	}
 }
