@@ -91,7 +91,7 @@ class HomeModel extends ShowVoteModel
 			</div>
 			
 			<?php 
-			if (isset($loggedUser['is_admin']) && $loggedUser['is_admin'] == 1) : ?>
+			if (isset($loggedUser['is_admin']) && ($loggedUser['is_admin'] == 1 || $loggedUser['id'] == $post['user_id'])) : ?>
 					<a href="<?=APP_ROOT?>/posts/delete/<?=$post['id']?>">Delete post</a>
 			<?php endif; ?>
 			<hr>
