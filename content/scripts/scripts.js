@@ -24,9 +24,14 @@ $(function() {
 	$(":file").filestyle({buttonText: "Find file"});
 });
 
-function showImage(postID)
+function showImage(postID, directoriesUp = 0)
 {
-	window.open("posts?" + postID);
+	let url = "posts?" + postID;
+	for(let i = 0; i < directoriesUp; i++)
+	{
+		url = "../" + url;
+	}
+	window.open(url);
 }
 
 $.fn.scrollBottom = function() { 
@@ -79,4 +84,10 @@ function addComment(post)
 		}).done(function( msg ) {
 			location.reload();
 		});
+}
+
+function showAllPosts(hiddenClassName, buttonID)
+{
+	$("." + hiddenClassName).css("display", "inline-block");
+	$("#show-hidden-posts-button_" + buttonID).css("display", "none");
 }

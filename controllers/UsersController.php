@@ -60,8 +60,17 @@ class UsersController extends BaseController
 
     public function userProfile()
     {
-	
+		if($this->isLoggedIn)
+		{
+			$this->userPosts = $this->model->getUserPosts();
+			$this->likedPosts = $this->model->getLikedPosts();
+		}
     }
+
+    public function showPosts($posts, &$index, &$startIndex, $count, $userPostContainerClass = "userPostContainer")
+    {
+		$this->model->showPosts($posts, $index, $startIndex, $count, $userPostContainerClass);
+	}
 
     public function logout()
     {
