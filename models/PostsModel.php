@@ -57,8 +57,14 @@ class PostsModel extends ShowVoteModel
     }
 	
 	public function showComment($post, $comment, $loggedUser, $index)
-	{ ?>
-		<h4><?php echo $_SESSION['username'] ?> Posted:</h4>
+	{
+		$this->showProfilePicture($comment);
+		$user = $this->getUserById($comment['user_id']);
+		?>
+		<span>
+			<b><a href="<?=APP_ROOT?>/users/userProfile?<?=$comment['user_id']?>">
+				<?php echo $user['username'];?>
+			</a></b> Posted:</span>
 		<div class = "commentText">
 			<?php echo $comment['content'] ?>
 		</div>
@@ -71,4 +77,17 @@ class PostsModel extends ShowVoteModel
 		$this->showVote($comment, $loggedUser, $index, "commentvotes") ?>
 		<hr>
 	<?php }
+	
+	function showProfilePicture($comment)
+	{
+		$target_dir = AVATARS;
+		$avatarImageLocation = $target_dir . "/default.png";
+		$result = glob ($target_dir . "/" . $comment['user_id'] . ".*");
+		if($result) {
+			$avatarImageLocation = $result[0];
+		}
+		?>
+		<img class = "avatar" src = "<?php echo $avatarImageLocation; ?>">
+		<?php
+	}
 }

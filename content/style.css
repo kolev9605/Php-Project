@@ -387,3 +387,8 @@ a:visited {
 .show-hidden-posts-button-container {
     text-align: center;
 }
+
+.avatar {
+	width: 30px;
+	border: 1px solid;
+}

@@ -9,19 +9,27 @@ class UsersModel extends BaseModel
         return $statement->fetch_all(MYSQLI_ASSOC);
     }
 	
-    public function getUserPosts() : array
+    public function userExists($id) 
+    {
+		$statement = self::$db->prepare("SELECT * FROM users WHERE users.id = ?");
+		$statement->bind_param("i", $id);
+		$statement->execute();
+		return $statement->get_result()->fetch_assoc();
+    }
+	
+    public function getUserPosts($id) : array
     {
         $statement = self::$db->prepare("SELECT * FROM posts WHERE posts.user_id = ? ORDER BY date DESC");
-        $statement->bind_param("i", $_SESSION['user_id']);
+        $statement->bind_param("i", $id);
         $statement->execute();
 
         return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 	
-    public function getLikedPosts() : array
+    public function getLikedPosts($id) : array
     {
         $statement = self::$db->prepare("SELECT * FROM votes WHERE votes.user_id = ?");
-        $statement->bind_param("i", $_SESSION['user_id']);
+        $statement->bind_param("i", $id);
         $statement->execute();
 
 		$result = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -78,16 +86,16 @@ class UsersModel extends BaseModel
         return $user_id;
     }
 	
-	public function showPosts($posts, &$index, &$startIndex, $count, $userPostContainerClass) 
+	public function showPosts($posts, &$index, &$startIndex, $count, $userPostContainerClass, $canDeletePost) 
 	{
 		$newPosts = array_slice($posts, $startIndex, $count);
 		foreach ($newPosts as $post)
 		{
-			$this->showPost($post, $startIndex, $index, $userPostContainerClass);
+			$this->showPost($post, $startIndex, $index, $userPostContainerClass, $canDeletePost);
 		}
 	} 
 	
-	function showPost($post, &$startIndex, &$index, $userPostContainerClass)
+	function showPost($post, &$startIndex, &$index, $userPostContainerClass, $canDeletePost)
 	{ ?>
 		<div class = "<?php echo $userPostContainerClass; ?>">
 			<h2 class = "post-title"><?=htmlentities($post['title'])?></h2>
@@ -106,8 +114,9 @@ class UsersModel extends BaseModel
 			</div>
 			<br>
 			
-			<a href="<?=APP_ROOT?>/posts/delete/<?=$post['id']?>">Delete post</a>
-			<?php 
+			<?php if($canDeletePost) : ?>
+				<a href="<?=APP_ROOT?>/posts/delete/<?=$post['id']?>">Delete post</a>
+			<?php endif;
 			$index++;
 			$startIndex++;?>
 		</div>
@@ -128,4 +137,16 @@ class UsersModel extends BaseModel
 			</div>
 		<?php endif;
 	}
+	
+	function showAvatar($id)
+	{
+		$target_dir = AVATARS;
+		$avatarImageLocation = $target_dir . "/default.png";
+		$result = glob ($target_dir . "/" . $id . ".*");
+		if($result) {
+			$avatarImageLocation = $result[0];
+		}
+	?>
+	<img class = "avatar" src = "<?php echo APP_ROOT . "/" . $avatarImageLocation; ?>">
+	<?php }
 }

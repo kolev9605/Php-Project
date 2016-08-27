@@ -24,7 +24,10 @@ $post = $this->getPostById($postID);?>
 		<br>
 		<button class="commentSubmit" 
 		onclick='addComment(<?php echo json_encode($post); ?> )'>Comment</button>
-	<?php endif;
+	<?php endif; ?>
+	<br>
+	<br>
+	<?php
 	$comments = $this->comments($post);
 	$index = 1;
 	if(isset($comments))

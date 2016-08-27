@@ -2,6 +2,7 @@
 
 define('APP_ROOT', '/project');
 define('UPLOADS', '/project/content/uploads');
+define('AVATARS', 'content/avatars');
 
 define('DEFAULT_CONTROLLER', 'home');
 define('DEFAULT_ACTION', 'index');

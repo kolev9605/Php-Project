@@ -47,9 +47,10 @@ function parseRequest() : array
 function processRequest(array $requestParsed)
 {
 	$arr = explode("?", $requestParsed['controller'], 2);
+	$arr2 = explode("?", $requestParsed['action'], 2);
     // Create the controller class
     $controller = $arr[0];
-    $action = $requestParsed['action'];
+    $action = $arr2[0];
     $controllerClassName = ucfirst(strtolower($controller)) . 'Controller';
     if (class_exists($controllerClassName)) {
         $controller = new $controllerClassName($controller, $action);

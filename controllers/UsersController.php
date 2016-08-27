@@ -62,14 +62,28 @@ class UsersController extends BaseController
     {
 		if($this->isLoggedIn)
 		{
-			$this->userPosts = $this->model->getUserPosts();
-			$this->likedPosts = $this->model->getLikedPosts();
+			$userID = $_SESSION['user_id'];
+			$user = $this->model->userExists($_SERVER['QUERY_STRING']);
+			$this->isOtherUser = false;
+			if(isset($_SERVER['QUERY_STRING']) && isset($user) && $user['id'] != $userID)
+			{
+				$this->isOtherUser = true;
+				$this->otherUser = $user;
+				$userID = $_SERVER['QUERY_STRING'];
+			}
+			$this->userPosts = $this->model->getUserPosts($userID);
+			$this->likedPosts = $this->model->getLikedPosts($userID);
 		}
     }
 
-    public function showPosts($posts, &$index, &$startIndex, $count, $userPostContainerClass = "userPostContainer")
+    public function showPosts($posts, &$index, &$startIndex, $count, $userPostContainerClass, $canDeletePost)
     {
-		$this->model->showPosts($posts, $index, $startIndex, $count, $userPostContainerClass);
+		$this->model->showPosts($posts, $index, $startIndex, $count, $userPostContainerClass, $canDeletePost);
+	}
+	
+	public function showAvatar($id)
+	{
+		$this->model->showAvatar($id);
 	}
 
     public function logout()
@@ -78,4 +92,55 @@ class UsersController extends BaseController
         $this->addInfoMessage("Logout successful.");
         $this->redirect("");
     }
+	
+	public function pickAvatar() {
+		$target_dir = "content/avatars/";
+		$index = $_SESSION['user_id'];
+		$imageFileType = pathinfo(basename($_FILES["avatarToUpload"]["name"]),PATHINFO_EXTENSION);
+		$target_file = $target_dir . $index . "." . $imageFileType;
+		$uploadOk = 1;
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+			$this->setValidationError("avatarToUpload", "Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+			$uploadOk = 0;
+		}
+		// Check if image file is a actual image or fake image
+		if(isset($_POST["submit"]) && strlen(basename( $_FILES["avatarToUpload"]["name"])) > 0 && $uploadOk) {
+			$check = getimagesize($_FILES["avatarToUpload"]["tmp_name"]);
+			if($check !== false) {
+				echo $_POST["submit"];
+				$uploadOk = 1;
+			} else {
+				$this->setValidationError("avatarToUpload", "File is not an image.");
+				$uploadOk = 0;
+			}
+		}
+		list($width, $height, $type, $attr) = getimagesize($_FILES["avatarToUpload"]["tmp_name"]);
+		if($width != $height)
+		{
+			$this->setValidationError("avatarToUpload", "Width and height must be the same");
+			$uploadOk = 0;
+		}
+		// Check if $uploadOk is set to 0 by an error
+		if ($uploadOk == 0) {
+			$this->setValidationError("avatarToUpload", "Sorry, your file was not uploaded.");
+		// if everything is ok, try to upload file
+		} else {
+			if (move_uploaded_file($_FILES["avatarToUpload"]["tmp_name"], $target_file)) {
+				$newTarget_dir = AVATARS;
+				$result = glob ($newTarget_dir . "/" . $_SESSION['user_id'] . ".*");
+				foreach($result as $file)
+				{
+					$currentFileType = pathinfo($file,PATHINFO_EXTENSION);
+					if($currentFileType != $imageFileType)
+					{
+						unlink($file);
+					}
+				}
+			} else {
+				$this->setValidationError("avatarToUpload", "Sorry there was an error uploading your message");
+			}
+		}
+		header('Location: ' . APP_ROOT. '/' . "users/userProfile");
+		die;
+	}
 }
