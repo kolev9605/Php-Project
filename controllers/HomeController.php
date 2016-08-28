@@ -5,7 +5,6 @@ class HomeController extends BaseController
     function index() {
 		$lastPosts = $this->model->getLastPosts();
 		$this->posts = $lastPosts;
-		$this->sidebarPosts = $lastPosts;
     }
 	
 	function view($id) {

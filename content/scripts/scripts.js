@@ -1,3 +1,5 @@
+const PIXELS_FROM_BOTTOM_BEFORE_MORE_POSTS = 500;
+
 $(function() {
     $('#messages li').click(function() {
         $(this).fadeOut();
@@ -90,4 +92,14 @@ function showAllPosts(hiddenClassName, buttonID)
 {
 	$("." + hiddenClassName).css("display", "inline-block");
 	$("#show-hidden-posts-button_" + buttonID).css("display", "none");
+}
+
+function showSearch(root)
+{
+	var content = $('#search').val();
+	if(content)
+	{
+		let url = root + "/search?" + content;
+		window.location.href = url;
+	}
 }

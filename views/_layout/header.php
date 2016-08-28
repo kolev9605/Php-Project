@@ -19,7 +19,8 @@
     </div>
     <div class="menuItem" id="searchBar">
         <input type="text" id="search" placeholder="Search"/>
-        <a href="#"><img id="searchButton" src="<?= APP_ROOT ?>/content/images/search-button.png"></a>
+        <img id="searchButton" src="<?= APP_ROOT ?>/content/images/search-button.png" 
+			onclick = 'showSearch("<?php echo APP_ROOT; ?>")'>
     </div>
     <div class="menuItem" id="menu">
         <div class="dropdown">
@@ -27,19 +28,15 @@
             <div class="dropdown-content">
 				<div class="menuItem">
 					<?php if ($this->isLoggedIn) : ?>
-					<!-- The user actions we will add later on-->
-					<?php else: ?>
-						<a href="<?=APP_ROOT?>/users/login">Login</a>
-						<a href="<?=APP_ROOT?>/users/register">Register</a>
-					<?php endif; ?>
-
-					<?php if ($this->isLoggedIn) : ?>
 						<div id="logged-in-info">
 							<a href="<?=APP_ROOT?>/users/userProfile">User Profile</a>
 							<form method="post" action="<?=APP_ROOT?>/users/logout">
 								<input id = "logout-button" type="submit" value="Logout"/>
 							</form>
 						</div>
+					<?php else: ?>
+						<a href="<?=APP_ROOT?>/users/login">Login</a>
+						<a href="<?=APP_ROOT?>/users/register">Register</a>
 					<?php endif; ?>
 				</div>
             </div>

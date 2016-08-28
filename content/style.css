@@ -43,6 +43,8 @@
     margin: auto;
     vertical-align: middle;
     line-height: normal;
+	cursor: pointer; 
+	cursor: hand;
 }
 
 #search {
