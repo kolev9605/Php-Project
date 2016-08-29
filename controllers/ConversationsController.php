@@ -48,7 +48,23 @@ class ConversationsController extends BaseController
 	
 	public function users() {
 		$partialUsername = $_POST['value'];
+		$ignoredNames = $_POST['ignoredNames'];
+		array_unshift($ignoredNames, $_SESSION['username']);
+		unset($ignoredNames[count($ignoredNames) - 1]);
 		$users = $this->model->getUsersWithPartialUsername($partialUsername);
+		for($i = 0; $i < count($users); $i++)
+		{
+			for($j = 0; $j < count($ignoredNames); $j++)
+			{
+				if($users[$i]['username'] == $ignoredNames[$j])
+				{
+					unset($users[$i]);
+					$users = array_values($users);
+					$i--;
+					break;
+				}
+			}
+		}
 		$users = array_splice($users, 0, 3);
 		foreach($users as $user) : ?>
 			<div class = "dropdownUsername" onclick = 'addUsername("<?php echo $user['username']; ?>")'>

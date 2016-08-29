@@ -157,7 +157,9 @@ function addConversationComment(conversation)
 }
 $(document).ready(function () {
 	$('#conversation-participants').on('input', function(e){
-		if($(this).val().length >= 3)
+		arrayOfNames = $(this).val().split(", ");
+		currentName = arrayOfNames[arrayOfNames.length - 1];
+		if(currentName.length >= 3)
 		{
 			$('#participent-dropdown-content').css("display", "inline-block");
 			$.ajax({
@@ -165,7 +167,8 @@ $(document).ready(function () {
 				  url: "users",
 				  data:
 				  {
-					value: $(this).val()
+					ignoredNames: arrayOfNames,
+					value: currentName
 				  }
 		    }).done(function(msg) {
 				result = msg.substr(0, msg.indexOf('<!DOCTYPE'));
@@ -190,5 +193,14 @@ $('#conversation-participants').change(function(e){
 
 function addUsername(username)
 {
+	let arrayOfNames = $('#conversation-participants').val().split(", ");
+	arrayOfNames[arrayOfNames.length - 1] = username;
+	let allUsernames = "";
+	for(let i = 0; i < arrayOfNames.length; i++)
+	{
+		allUsernames = allUsernames + arrayOfNames[i] + ", ";
+	}
 	
+	$('#conversation-participants').val(allUsernames);
+	$('#participent-dropdown-content').css("display", "none");
 }
