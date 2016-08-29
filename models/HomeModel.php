@@ -87,7 +87,7 @@ class HomeModel extends ShowVoteModel
 			
 			<div class ="post-username">
 				<i>Posted by</i>
-				<a href="<?=APP_ROOT?>/users/userProfile?<?=$user['id']?>"><?php echo $user['username'];?></a>
+				<?php $this->showUsername($user); ?>
 			</div>
 			
 			<?php 

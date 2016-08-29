@@ -21,13 +21,15 @@ class VoteController extends BaseController
 			$currentVoteIsUpVote = $vote['is_positive'];
 		}
 		
+		$removeVote = false;
 		if($isUpVote)
 		{
 			if(isset($currentVoteIsUpVote))
 			{
 				if($currentVoteIsUpVote)
 				{
-					$voteChange = 0;
+					$removeVote = true;
+					$voteChange = -1;
 				}
 				else
 				{
@@ -48,13 +50,19 @@ class VoteController extends BaseController
 				}
 				else
 				{
-					$voteChange = 0;
+					$removeVote = true;
+					$voteChange = 1;
 				}
 			}
 		}
 		
 		$newVotes = $this->model->getPostVotes($post['id']) + $voteChange;
 		$this->model->vote($post, $isUpVote, $newVotes);
+		if($removeVote)
+		{
+			$this->model->removeVote($post, $loggedUser);
+		}
+		
 		echo $newVotes . "\n";
     }
 }

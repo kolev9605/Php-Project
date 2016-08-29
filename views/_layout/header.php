@@ -30,6 +30,7 @@
 					<?php if ($this->isLoggedIn) : ?>
 						<div id="logged-in-info">
 							<a href="<?=APP_ROOT?>/users/userProfile">User Profile</a>
+							<a href="<?=APP_ROOT?>/conversations">Conversations</a>
 							<form method="post" action="<?=APP_ROOT?>/users/logout">
 								<input id = "logout-button" type="submit" value="Logout"/>
 							</form>

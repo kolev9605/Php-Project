@@ -87,7 +87,13 @@ $buttonIndex = 0;
 	<hr>
 </div>
 
-<?php if(!$this->isOtherUser) : ?>
+<?php if($this->isOtherUser) : 
+	if($this->isFollowingUser($this->otherUser['id'])) : ?>
+		<button onclick = "unfollowUser(<?php echo $this->otherUser['id']; ?>)">Unfollow</button>
+	<?php else : ?>
+		<button onclick = "followUser(<?php echo $this->otherUser['id']; ?>)">Follow</button>
+	<?php endif;
+else : ?>
 	<h3>Current profile image:</h3>
 	<?php 
 		$this->showAvatar($_SESSION['user_id']);
@@ -102,6 +108,27 @@ $buttonIndex = 0;
 	</form>
 
 	<hr>
+	
+	<?php 
+	if(count($this->followedUsers))
+	{ ?>
+		People that you follow: 
+		<br>
+		<?php 
+		$index = 0;
+		$count = count($this->followedUsers);
+		foreach($this->followedUsers as $followedUser)
+		{
+			$followedUserInformation = $this->model->getUserById($followedUser['followed_user_id']);
+			$this->model->showUsername($followedUserInformation);
+			if($index < $count - 1) : ?>
+				| 
+			<?php 
+			$index++;
+			endif;
+		} ?>
+		<hr>
+	<?php } ?>
 
 	<div class="user-profile-block">
 		<a href = "<?=APP_ROOT?>/posts/create">Create New Post</a>

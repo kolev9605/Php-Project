@@ -55,7 +55,15 @@ function vote(loggedIn, loginPage, voteObject, loggedUser, isUpVote, voteNumberI
 		  }
 		}).done(function( msg ) {
 			$("#" + voteNumberID).text(msg.substr(0, msg.indexOf('\n')));
-			if(isUpVote)
+			if(isUpVote && $("#upArrow_" + index).attr("src") == imagesFolder + "upvote-arrow.png")
+			{
+				$("#upArrow_" + index).attr("src", imagesFolder + "arrow-rotated.png");
+			}
+			else if(!isUpVote && $("#downArrow_" + index).attr("src") == imagesFolder + "downvote-arrow.png")
+			{
+				$("#downArrow_" + index).attr("src", imagesFolder + "arrow.png");
+			}
+			else if(isUpVote)
 			{
 				$("#upArrow_" + index).attr("src", imagesFolder + "upvote-arrow.png");
 				$("#downArrow_" + index).attr("src", imagesFolder + "arrow.png");
@@ -102,4 +110,85 @@ function showSearch(root)
 		let url = root + "/search?" + content;
 		window.location.href = url;
 	}
+}
+
+function followUser(followedUserId)
+{
+	$.ajax({
+		  type: "POST",
+		  url: "followUser",
+		  data:
+		  {
+			followedUserId: followedUserId
+		  }
+		}).done(function( msg ) {
+			location.reload();
+		});
+}
+
+function unfollowUser(followedUserId)
+{
+	$.ajax({
+		  type: "POST",
+		  url: "unfollowUser",
+		  data:
+		  {
+			followedUserId: followedUserId
+		  }
+		}).done(function( msg ) {
+			location.reload();
+		});
+}
+
+function addConversationComment(conversation)
+{
+	var content=$('#conversationCommentContent').val();
+	$.ajax({
+		  type: "POST",
+		  url: "../conversationComment",
+		  data:
+		  {
+			conversation: conversation,
+			content: content
+		  }
+		}).done(function( msg ) {
+			location.reload();
+		});
+}
+$(document).ready(function () {
+	$('#conversation-participants').on('input', function(e){
+		if($(this).val().length >= 3)
+		{
+			$('#participent-dropdown-content').css("display", "inline-block");
+			$.ajax({
+				  type: "POST",
+				  url: "users",
+				  data:
+				  {
+					value: $(this).val()
+				  }
+		    }).done(function(msg) {
+				result = msg.substr(0, msg.indexOf('<!DOCTYPE'));
+				if(result == "")
+				{
+					$('#participent-dropdown-content').css("display", "none");
+				}
+				$("#participent-dropdown-content").empty();
+				$("#participent-dropdown-content").append(result);
+			});
+		}
+		else
+		{
+			$('#participent-dropdown-content').css("display", "none");
+		}
+	});
+});
+	
+$('#conversation-participants').change(function(e){
+	$('#participent-dropdown-content').css("display", "none");
+});
+
+function addUsername(username)
+{
+	
 }

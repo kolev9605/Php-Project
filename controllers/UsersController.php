@@ -12,27 +12,22 @@ class UsersController extends BaseController
     {
         if ($this->isPost) {
             $username = $_POST['register-username'];
-            if (strlen($username) < 2 || strlen($username) > 50) {
+            if (strlen($username) < 4 || strlen($username) > 50) {
                 $this->setValidationError("register-username", "Invalid username!");
             }
 
             $password = $_POST['register-password'];
-            if (strlen($username) < 2 || strlen($username) > 50) {
+            if (strlen($password) < 4 || strlen($password) > 50) {
                 $this->setValidationError("register-password", "Invalid password!");
             }
 
-            $full_name = $_POST['full-name'];
-            if (strlen($username) > 200) {
-                $this->setValidationError("full-name", "Invalid full name!");
-            }
-
             if ($this->formValid()) {
-                $userId = $this->model->register($username, $password, $full_name);
+                $userId = $this->model->register($username, $password);
                 if($userId) {
                     $_SESSION['username'] = $username;
                     $_SESSION['user_id'] = $userId;
                     $this->addInfoMessage('Registration successful.');
-                    $this->redirect("");
+                    $this->redirect("home");
                 } else {
                     $this->addErrorMessage("Error: user registration failed.");
                 }
@@ -70,6 +65,10 @@ class UsersController extends BaseController
 				$this->isOtherUser = true;
 				$this->otherUser = $user;
 				$userID = $_SERVER['QUERY_STRING'];
+			}
+			else 
+			{
+				$this->followedUsers = $this->model->getFollowedUsers($userID);
 			}
 			$this->userPosts = $this->model->getUserPosts($userID);
 			$this->likedPosts = $this->model->getLikedPosts($userID);
@@ -142,5 +141,17 @@ class UsersController extends BaseController
 		}
 		header('Location: ' . APP_ROOT. '/' . "users/userProfile");
 		die;
+	}
+	
+	public function followUser() {
+		$this->model->followUser($_POST['followedUserId']);
+	}
+	
+	public function unfollowUser() {
+		$this->model->unfollowUser($_POST['followedUserId']);
+	}
+	
+	public function isFollowingUser($followedUserID) {
+		return $this->model->isFollowingUser($followedUserID);
 	}
 }

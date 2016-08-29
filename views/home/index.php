@@ -1,8 +1,6 @@
 <?php 
 $this->title = 'Welcome to our Teamwork Project Home page';?>
 
-<h1><?=htmlspecialchars($this->title)?></h1>
-
 <main id="posts">
 	<div class = "post">
 		<article class = "post" id = "articlePosts">

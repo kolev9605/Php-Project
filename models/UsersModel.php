@@ -68,14 +68,14 @@ class UsersModel extends BaseModel
         return false;
     }
 
-    public function register(string $username, string $password, string $full_name)
+    public function register(string $username, string $password)
     {
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
         $statement = self::$db->prepare(
-            "INSERT INTO users (username, password_hash, full_name) VALUES (?,?,?)"
+            "INSERT INTO users (username, password_hash) VALUES (?,?)"
         );
 
-        $statement->bind_param("sss", $username, $password_hash, $full_name);
+        $statement->bind_param("ss", $username, $password_hash);
         $statement->execute();
         if($statement->affected_rows != 1) {
             return false;
@@ -84,6 +84,52 @@ class UsersModel extends BaseModel
         $user_id = self::$db->query("SELECT LAST_INSERT_ID()")->fetch_row()[0];
 
         return $user_id;
+    }
+
+    public function followUser($followedUserId)
+    {
+        $statement = self::$db->prepare(
+            "INSERT INTO followers (user_id, followed_user_id) VALUES (?,?)"
+        );
+
+        $statement->bind_param("ss", $_SESSION['user_id'], $followedUserId);
+        $statement->execute();
+    }
+
+    public function unfollowUser($followedUserId)
+    {
+        $statement = self::$db->prepare(
+            "DELETE FROM followers WHERE followers.user_id = ? AND followers.followed_user_id = ?"
+        );
+
+        $statement->bind_param("ss", $_SESSION['user_id'], $followedUserId);
+        $statement->execute();
+    }
+
+    public function isFollowingUser($followedUserId)
+    {
+        $statement = self::$db->prepare(
+            "SELECT * FROM followers WHERE followers.user_id = ? AND followers.followed_user_id = ?"
+        );
+
+        $statement->bind_param("ss", $_SESSION['user_id'], $followedUserId);
+        $statement->execute();
+		
+		return $statement->get_result()->fetch_assoc();
+    }
+
+    public function getFollowedUsers($userID) : array
+    {
+        $statement = self::$db->prepare(
+            "SELECT followers.followed_user_id FROM followers WHERE followers.user_id = ?"
+        );
+
+        $statement->bind_param("s", $userID);
+        $statement->execute();
+		
+		$result = $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+		
+		return $result;
     }
 	
 	public function showPosts($posts, &$index, &$startIndex, $count, $userPostContainerClass, $canDeletePost) 

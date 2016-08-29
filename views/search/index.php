@@ -1,7 +1,5 @@
 <?php 
-$this->title = 'Welcome to our Teamwork Project Home page';?>
-
-<h1><?=htmlspecialchars($this->title)?></h1>
+$this->title = 'Search results';?>
 
 <main id="posts">
 	<div class = "post">

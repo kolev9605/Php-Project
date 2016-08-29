@@ -12,8 +12,6 @@
         <input type="password" placeholder="Enter password" id="register-password" name="register-password"/>
         <h2 class="title-form">Confirm Password:</h2>
         <input type="password" placeholder="Confirm password" id="confirmed-password" name="confirmed-password"/>
-        <h2 class="title-form">Full name:</h2>
-        <input type="text" placeholder="Full name" id="full-name" name="full-name"/>
 
         <input type="submit" class="submitButton" id="register-button" value="Register"/>
     </form>

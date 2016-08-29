@@ -14,4 +14,17 @@ abstract class BaseModel
             }
         }
     }
+	
+	public function showUsername($user)
+	{ ?>
+		<a href="<?=APP_ROOT?>/users/userProfile?<?=$user['id']?>"><?php echo $user['username'];?></a>
+	<?php 
+	}
+	
+	public function getUserById(int $id) {
+		$statement = self::$db->prepare("SELECT * FROM users WHERE users.id = ?");
+		$statement->bind_param("i", $id);
+		$statement->execute();
+		return $statement->get_result()->fetch_assoc();
+    }
 }

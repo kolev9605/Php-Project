@@ -8,13 +8,6 @@ class PostsModel extends ShowVoteModel
 		return $statement->fetch_all(MYSQLI_ASSOC);
     }
 	
-	public function getUserById(int $id) {
-		$statement = self::$db->prepare("SELECT * FROM users WHERE users.id = ?");
-		$statement->bind_param("i", $id);
-		$statement->execute();
-		return $statement->get_result()->fetch_assoc();
-    }
-	
 	public function getById(int $id) {
 		$statement = self::$db->prepare(
 			"SELECT * FROM posts WHERE id = ?");
@@ -62,9 +55,7 @@ class PostsModel extends ShowVoteModel
 		$user = $this->getUserById($comment['user_id']);
 		?>
 		<span>
-			<b><a href="<?=APP_ROOT?>/users/userProfile?<?=$comment['user_id']?>">
-				<?php echo $user['username'];?>
-			</a></b> Posted:</span>
+			<b><?php $this->showUsername($user); ?></b> Posted:</span>
 		<div class = "commentText">
 			<?php echo $comment['content'] ?>
 		</div>
