@@ -66,8 +66,14 @@ class ConversationsController extends BaseController
 			}
 		}
 		$users = array_splice($users, 0, 3);
+		$functionName = "addUsername";
+		if(isset($_POST['isSearch']))
+		{
+			$functionName = "addSearchUsername";
+		}
 		foreach($users as $user) : ?>
-			<div class = "dropdownUsername" onclick = 'addUsername("<?php echo $user['username']; ?>")'>
+			<div class = "dropdownUsername" onclick = '<?php echo $functionName ?>("<?php echo $user['username']; ?>")'>
+				<?php $this->model->showProfilePicture($user['id']); ?>
 				<i><?php echo $user['username']; ?></i>
 			</div>
     <?php endforeach;

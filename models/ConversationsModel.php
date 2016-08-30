@@ -45,13 +45,6 @@ class ConversationsModel extends BaseModel
 		return $statement->get_result()->fetch_assoc();
     }
 	
-	public function getUserByUsername($username) {
-		$statement = self::$db->prepare("SELECT * FROM users WHERE users.username = ?");
-		$statement->bind_param("s", $username);
-		$statement->execute();
-		return $statement->get_result()->fetch_assoc();
-    }
-	
 	public function getParticipantsById($id) {
 		$statement = self::$db->prepare("SELECT * FROM conversationparticipants WHERE conversationparticipants.conversation_id = ?");
 		$statement->bind_param("i", $id);
@@ -87,7 +80,7 @@ class ConversationsModel extends BaseModel
 	
 	public function showComment($comment)
 	{
-		$this->showProfilePicture($comment);
+		$this->showProfilePicture($comment['user_id']);
 		$user = $this->getUserById($comment['user_id']);
 		?>
 		<span>
@@ -103,11 +96,11 @@ class ConversationsModel extends BaseModel
 		<hr>
 	<?php }
 	
-	function showProfilePicture($comment)
+	function showProfilePicture($id)
 	{
 		$target_dir = AVATARS;
 		$avatarImageLocation = $target_dir . "/default.png";
-		$result = glob ($target_dir . "/" . $comment['user_id'] . ".*");
+		$result = glob ($target_dir . "/" . $id . ".*");
 		if($result) {
 			$avatarImageLocation = $result[0];
 		}

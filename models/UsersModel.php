@@ -17,15 +17,6 @@ class UsersModel extends BaseModel
 		return $statement->get_result()->fetch_assoc();
     }
 	
-    public function getUserPosts($id) : array
-    {
-        $statement = self::$db->prepare("SELECT * FROM posts WHERE posts.user_id = ? ORDER BY date DESC");
-        $statement->bind_param("i", $id);
-        $statement->execute();
-
-        return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
-    }
-	
     public function getLikedPosts($id) : array
     {
         $statement = self::$db->prepare("SELECT * FROM votes WHERE votes.user_id = ?");

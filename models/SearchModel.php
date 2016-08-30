@@ -14,4 +14,17 @@ class SearchModel extends HomeModel
         $statement->execute();
 		return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
 	}
+	
+    public function getSearchedPostsFromUser($searchTerm, $id) : array
+	{
+		$statement = self::$db->prepare(
+			"SELECT * " .
+			"FROM posts WHERE title LIKE ? AND posts.user_id = ? " .
+			"ORDER BY date DESC");
+			
+		$searchTermExpanded = "%" . $searchTerm . "%";
+        $statement->bind_param("si", $searchTermExpanded, $id);
+        $statement->execute();
+		return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+	}
 }

@@ -105,9 +105,10 @@ function showAllPosts(hiddenClassName, buttonID)
 function showSearch(root)
 {
 	var content = $('#search').val();
-	if(content)
+	var username = $('#searchByUsername').val();
+	if(content || username)
 	{
-		let url = root + "/search?" + content;
+		let url = root + "/search?searchTerm=" + content + "&searchUsername=" + username;
 		window.location.href = url;
 	}
 }
@@ -155,41 +156,51 @@ function addConversationComment(conversation)
 			location.reload();
 		});
 }
+
 $(document).ready(function () {
 	$('#conversation-participants').on('input', function(e){
-		arrayOfNames = $(this).val().split(", ");
-		currentName = arrayOfNames[arrayOfNames.length - 1];
-		if(currentName.length >= 3)
-		{
-			$('#participent-dropdown-content').css("display", "inline-block");
-			$.ajax({
-				  type: "POST",
-				  url: "users",
-				  data:
-				  {
-					ignoredNames: arrayOfNames,
-					value: currentName
-				  }
-		    }).done(function(msg) {
-				result = msg.substr(0, msg.indexOf('<!DOCTYPE'));
-				if(result == "")
-				{
-					$('#participent-dropdown-content').css("display", "none");
-				}
-				$("#participent-dropdown-content").empty();
-				$("#participent-dropdown-content").append(result);
-			});
-		}
-		else
-		{
-			$('#participent-dropdown-content').css("display", "none");
-		}
+		autocomplete($(this).val());
+	});
+	
+	$('#conversation-participants').blur(function(){
+		$('#participent-dropdown-content').fadeOut();
+	});
+	
+	$('#conversation-participants').focus(function(){
+		autocomplete($(this).val());
 	});
 });
-	
-$('#conversation-participants').change(function(e){
-	$('#participent-dropdown-content').css("display", "none");
-});
+
+function autocomplete(value)
+{
+	arrayOfNames = value.split(", ");
+	currentName = arrayOfNames[arrayOfNames.length - 1];
+	if(currentName.length >= 3)
+	{
+		$('#participent-dropdown-content').css("display", "inline-block");
+		$.ajax({
+			  type: "POST",
+			  url: "users",
+			  data:
+			  {
+				ignoredNames: arrayOfNames,
+				value: currentName
+			  }
+		}).done(function(msg) {
+			result = msg.substr(0, msg.indexOf('<!DOCTYPE'));
+			if(result == "")
+			{
+				$('#participent-dropdown-content').css("display", "none");
+			}
+			$("#participent-dropdown-content").empty();
+			$("#participent-dropdown-content").append(result);
+		});
+	}
+	else
+	{
+		$('#participent-dropdown-content').css("display", "none");
+	}
+}
 
 function addUsername(username)
 {
@@ -203,4 +214,57 @@ function addUsername(username)
 	
 	$('#conversation-participants').val(allUsernames);
 	$('#participent-dropdown-content').css("display", "none");
+}
+
+$(document).ready(function () {
+	$('#searchByUsername').on('input', function(e){
+		searchAutocomplete($(this).val());
+	});
+	
+	$('#searchByUsername').blur(function(){
+		$('#search-dropdown-content').fadeOut();
+	});
+	
+	$('#searchByUsername').focus(function(){
+		searchAutocomplete($(this).val());
+	});
+});
+
+function searchAutocomplete(value) {
+	currentName = value;
+	arrayNames = [];
+	arrayNames[0] = currentName;
+	var baseUrl = window.location.protocol + "//" + window.location.host + "/project/";
+	if(currentName.length >= 3)
+	{
+		$('#search-dropdown-content').css("display", "inline-block");
+		$.ajax({
+			  type: "POST",
+			  url: baseUrl + "conversations/users",
+			  data:
+			  {
+				ignoredNames: arrayNames,
+				value: currentName,
+				isSearch: true
+			  }
+		}).done(function(msg) {
+			result = msg.substr(0, msg.indexOf('<!DOCTYPE'));
+			if(result == "")
+			{
+				$('#search-dropdown-content').css("display", "none");
+			}
+			$("#search-dropdown-content").empty();
+			$("#search-dropdown-content").append(result);
+		});
+	}
+	else
+	{
+		$('#search-dropdown-content').css("display", "none");
+	}
+}
+
+function addSearchUsername(username)
+{
+	$('#searchByUsername').val(username);
+	$('#search-dropdown-content').css("display", "none");
 }

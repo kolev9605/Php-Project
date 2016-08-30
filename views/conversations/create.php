@@ -6,7 +6,7 @@
 	<form action="create" method="post" enctype="multipart/form-data">
 		Participants: 
 		<div class="dropdown">
-			<input type="text" name="conversation-participants" id = "conversation-participants" autocomplete="off"/>
+			<input class = "participants-field" type="text" name="conversation-participants" id = "conversation-participants" autocomplete="off"/>
             <div class="dropdown-content" id = "participent-dropdown-content">
 			</div>
 		</div>

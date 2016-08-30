@@ -15,9 +15,13 @@ class UsersController extends BaseController
             if (strlen($username) < 4 || strlen($username) > 50) {
                 $this->setValidationError("register-username", "Invalid username!");
             }
+			
+			if( !ctype_alnum( $username ) ) {
+                $this->setValidationError("register-username", "Invalid characters!");
+            }
 
             $password = $_POST['register-password'];
-            if (strlen($password) < 4 || strlen($password) > 50) {
+            if (strlen($password) < 2 || strlen($password) > 50) {
                 $this->setValidationError("register-password", "Invalid password!");
             }
 

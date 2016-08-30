@@ -1,4 +1,9 @@
-<?php $this->title = 'Conversations'; ?>
+<?php $this->title = 'Conversations';
+
+foreach($this->comments as $comment)
+{
+	$this->showComment($comment);
+}  ?>
 
 <div>
 	<textarea class = "commentField" type="text" rows = "5" id = "conversationCommentContent" name = "conversationCommentContent" placeholder = "Add your comment here"></textarea>
@@ -8,8 +13,3 @@
 </div>
 
 <hr>
-
-<?php foreach($this->comments as $comment)
-{
-	$this->showComment($comment);
-}

@@ -18,26 +18,45 @@
         </a>
     </div>
     <div class="menuItem" id="searchBar">
-        <input type="text" id="search" placeholder="Search"/>
+		<input type="text" class = "search" id="search" placeholder="Search"/>
+        <img id="searchButton" src="<?= APP_ROOT ?>/content/images/search-button.png" 
+			onclick = 'showSearch("<?php echo APP_ROOT; ?>")'>
+    </div>
+    <div class="menuItem" id="searchBar">
+		<div class="dropdown">
+			<input type="text" class = "search"  id="searchByUsername" placeholder="Search by username"/>
+			<div class="dropdown-content" id = "search-dropdown-content">
+			</div>
+		</div>
         <img id="searchButton" src="<?= APP_ROOT ?>/content/images/search-button.png" 
 			onclick = 'showSearch("<?php echo APP_ROOT; ?>")'>
     </div>
     <div class="menuItem" id="menu">
         <div class="dropdown">
             <img class="icon" src="<?= APP_ROOT ?>/content/images/my-profile-icon.png">
-            <div class="dropdown-content">
+            <div class="dropdown-content" id = "menu-dropdown-content">
 				<div class="menuItem">
 					<?php if ($this->isLoggedIn) : ?>
 						<div id="logged-in-info">
-							<a href="<?=APP_ROOT?>/users/userProfile">User Profile</a>
-							<a href="<?=APP_ROOT?>/conversations">Conversations</a>
-							<form method="post" action="<?=APP_ROOT?>/users/logout">
-								<input id = "logout-button" type="submit" value="Logout"/>
-							</form>
+							<div class = "dropdown-item">
+								<a href="<?=APP_ROOT?>/users/userProfile">User Profile</a>
+							</div>
+							<div class = "dropdown-item">
+								<a href="<?=APP_ROOT?>/conversations">Conversations</a>
+							</div>
+							<div class = "dropdown-item">
+								<form method="post" action="<?=APP_ROOT?>/users/logout">
+									<input id = "logout-button" type="submit" value="Logout"/>
+								</form>
+							</div>
 						</div>
 					<?php else: ?>
-						<a href="<?=APP_ROOT?>/users/login">Login</a>
-						<a href="<?=APP_ROOT?>/users/register">Register</a>
+						<div class = "dropdown-item">
+							<a href="<?=APP_ROOT?>/users/login">Login</a>
+						</div>
+						<div class = "dropdown-item">
+							<a href="<?=APP_ROOT?>/users/register">Register</a>
+						</div>
 					<?php endif; ?>
 				</div>
             </div>

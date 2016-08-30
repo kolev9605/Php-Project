@@ -27,4 +27,20 @@ abstract class BaseModel
 		$statement->execute();
 		return $statement->get_result()->fetch_assoc();
     }
+	
+	public function getUserByUsername($username) {
+		$statement = self::$db->prepare("SELECT * FROM users WHERE users.username = ?");
+		$statement->bind_param("s", $username);
+		$statement->execute();
+		return $statement->get_result()->fetch_assoc();
+    }
+	
+    public function getUserPosts($id) : array
+    {
+        $statement = self::$db->prepare("SELECT * FROM posts WHERE posts.user_id = ? ORDER BY date DESC");
+        $statement->bind_param("i", $id);
+        $statement->execute();
+
+        return $statement->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }
