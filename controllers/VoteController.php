@@ -37,6 +37,10 @@ class VoteController extends BaseController
 					$voteChange = 2;
 				}
 			}
+			else if($loggedUser['is_admin'])
+			{
+				$this->model->moveToHot($post);
+			}
 		}
 		else
 		{

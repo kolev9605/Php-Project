@@ -33,7 +33,7 @@ class ShowVoteModel extends BaseModel
 	
 	function showVoteImages($upArrowImage, $downArrowImage, $voteObject, $loggedUser, $index, $table)
 	{ 
-		$url = "vote";
+		$url = APP_ROOT . "/vote";
 		$arrowClass = "Arrow";
 		$voteNumberClass = "voteNumber";
 		if($table == "commentvotes")

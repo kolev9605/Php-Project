@@ -14,7 +14,10 @@
 <header>
     <div class="menuItem" id="logo">
         <a id="logoText" href="<?= APP_ROOT ?>">
-            Our Teamwork project
+            Hot Page |
+        </a>
+        <a id="logoText" href="<?= APP_ROOT ?>/home/fresh">
+            Fresh Page
         </a>
     </div>
     <div class="menuItem" id="searchBar">

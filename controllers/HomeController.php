@@ -3,6 +3,11 @@
 class HomeController extends BaseController
 {
     function index() {
+		$lastPosts = $this->model->getHotLastPosts();
+		$this->posts = $lastPosts;
+    }
+	
+    function fresh() {
 		$lastPosts = $this->model->getLastPosts();
 		$this->posts = $lastPosts;
     }

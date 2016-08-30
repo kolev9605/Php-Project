@@ -1,12 +1,21 @@
 <?php
 
 class HomeModel extends ShowVoteModel
-{
+{	
+    public function getHotLastPosts() : array
+	{
+		$statement = self::$db->query(
+			"SELECT posts.id, title, imageLocation, date, user_id, posts.votes, posts.is_hot " .
+			"FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE is_hot = 1 " .
+			"ORDER BY date DESC");
+		return $statement->fetch_all(MYSQLI_ASSOC);
+	}
+	
     public function getLastPosts() : array
 	{
 		$statement = self::$db->query(
-			"SELECT posts.id, title, imageLocation, date, user_id, posts.votes " .
-			"FROM posts LEFT JOIN users ON posts.user_id = users.id " .
+			"SELECT posts.id, title, imageLocation, date, user_id, posts.votes, posts.is_hot " .
+			"FROM posts LEFT JOIN users ON posts.user_id = users.id WHERE is_hot = 0 " .
 			"ORDER BY date DESC");
 		return $statement->fetch_all(MYSQLI_ASSOC);
 	}
@@ -42,7 +51,7 @@ class HomeModel extends ShowVoteModel
 		{
 			$this->showPost($post, $index, $startIndex);
 		}
-		if($count > count($newPosts)) : ?>
+		if($startIndex == count($posts)) : ?>
 			<div class = "postContainer">
 				<h2>Sorry there are no posts left to display</h2>
 			</div>

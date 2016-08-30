@@ -12,39 +12,8 @@ $this->title = 'Search results';?>
 				$length = 5;
 				$this->showPosts($startIndex, $length, $index);
 				?>
-
-				<script type="text/javascript">
-					let index = <?php echo $index?>;
-					let startIndex = <?php echo $startIndex?>;
-					$( window ).scroll(function() {
-						if($(window).scrollBottom() < PIXELS_FROM_BOTTOM_BEFORE_MORE_POSTS && $.active == 0)
-						{
-							showPosts(true);
-						}
-					});
-					
-					function showPosts(onScrollDown = false) {
-						if(onScrollDown)
-						{
-							$.ajax({
-									type: "POST",
-									url: '',
-									data: {
-										index: index,
-										startIndex: startIndex
-									},
-									success: function( data ) {
-										if (!(typeof $(data).find(".indexValue").attr("id") === "undefined")) {
-											result = $(data).find(".postContainer");
-											$("#articlePosts").append(result);
-											index = $(data).find(".indexValue").attr("id");
-											startIndex = $(data).find(".startIndexValue").attr("id");
-										}
-									}
-								});
-						}
-					}
-				</script>
+				<div class = "indexDivValue"><?php echo $index ?></div> 
+				<div class = "startIndexDivValue"><?php echo $startIndex ?></div>
 			<?php }
 			else 
 			{ 

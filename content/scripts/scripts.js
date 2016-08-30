@@ -26,6 +26,45 @@ $(function() {
 	$(":file").filestyle({buttonText: "Find file"});
 });
 
+let index = 0;
+let startIndex = 0;
+$( window ).scroll(function() {
+	if($(window).scrollBottom() < PIXELS_FROM_BOTTOM_BEFORE_MORE_POSTS && $.active == 0)
+	{
+		showPosts(true);
+	}
+});
+
+function showPosts(onScrollDown = false) {
+	if(onScrollDown)
+	{
+		if(index == 0)
+		{
+			index = $(".indexDivValue").text();
+		}
+		if(startIndex == 0)
+		{
+			startIndex = $(".startIndexDivValue").text();
+		}
+		$.ajax({
+				type: "POST",
+				url: '',
+				data: {
+					index: index,
+					startIndex: startIndex
+				},
+				success: function( data ) {
+					if (!(typeof $(data).find(".indexValue").attr("id") === "undefined")) {
+						result = $(data).find(".postContainer");
+						$("#articlePosts").append(result);
+						index = $(data).find(".indexValue").attr("id");
+						startIndex = $(data).find(".startIndexValue").attr("id");
+					}
+				}
+			});
+	}
+}
+
 function showImage(postID, directoriesUp = 0)
 {
 	let url = "posts?" + postID;

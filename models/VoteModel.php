@@ -37,6 +37,15 @@ class VoteModel extends BaseModel
         $statement->execute();
     }
 	
+    public function moveToHot($post) {
+		$statement = self::$db->prepare(
+            "UPDATE posts SET posts.is_hot = 1 WHERE posts.id = ?"
+        );
+
+        $statement->bind_param("i", $post['id']);
+        $statement->execute();
+    }
+	
     public function removeVote($post, $loggedUser) {
 		$statement = self::$db->prepare(
             "DELETE FROM votes WHERE votes.post_id = ? AND votes.user_id = ?"

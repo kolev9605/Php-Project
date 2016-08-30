@@ -433,3 +433,7 @@ a:visited {
 .participants-field {
 	width: 500px;
 }
+
+.indexDivValue, .startIndexDivValue {
+	display:none;
+}
