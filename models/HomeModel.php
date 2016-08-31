@@ -120,8 +120,8 @@ class HomeModel extends ShowVoteModel
 	function showImage($post, $index) 
 	{ 
 		$imageLocation = UPLOADS . "/" . htmlentities($post['imageLocation']);
-		list($height) = getimagesize($_SERVER['DOCUMENT_ROOT'] . $imageLocation);
-		if($height > 400) : 
+		list($width, $height) = getimagesize($_SERVER['DOCUMENT_ROOT'] . $imageLocation);
+		if($height / $width >= 2) : 
 		?>
 			<div id = "image_<?php echo $index; ?>" class="post-image-container">
 				<img class = "post-image" src = "<?= $imageLocation?>">

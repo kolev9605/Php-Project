@@ -148,7 +148,7 @@ class UsersModel extends BaseModel
 				<?=(new DateTime($post['date']))->format('d-M-Y')?>
 				<br>
 				<button id="show_<?php echo $index; ?>" class = "user-content-button" type="button" 
-					onclick='showImage(<?php echo $post['id'] ?>, 1)'>
+					onclick='showImage(<?php echo $post['id'] ?>)'>
 						Show post
 				</button>
 				
@@ -166,8 +166,8 @@ class UsersModel extends BaseModel
 	function showImage($post, $index) 
 	{ 
 		$imageLocation = UPLOADS . "/" . htmlentities($post['imageLocation']);
-		list($height) = getimagesize($_SERVER['DOCUMENT_ROOT'] . $imageLocation);
-		if($height > 200) : 
+		list($width, $height) = getimagesize($_SERVER['DOCUMENT_ROOT'] . $imageLocation);
+		if($height / $width >= 2) : 
 		?>
 			<div id = "image_<?php echo $index; ?>" class="user-post-image-container">
 				<img class = "user-post-image" src = "<?= $imageLocation?>">

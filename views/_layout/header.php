@@ -42,6 +42,9 @@
 					<?php if ($this->isLoggedIn) : ?>
 						<div id="logged-in-info">
 							<div class = "dropdown-item">
+								<a href = "<?=APP_ROOT?>/posts/create">Create New Post</a>
+							</div>
+							<div class = "dropdown-item">
 								<a href="<?=APP_ROOT?>/users/userProfile">User Profile</a>
 							</div>
 							<div class = "dropdown-item">

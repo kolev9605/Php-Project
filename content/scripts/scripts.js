@@ -66,13 +66,9 @@ function showPosts(onScrollDown = false) {
 	}
 }
 
-function showImage(postID, directoriesUp = 0)
+function showImage(postID)
 {
-	let url = "posts?" + postID;
-	for(let i = 0; i < directoriesUp; i++)
-	{
-		url = "../" + url;
-	}
+	let url = window.location.protocol + "//" + window.location.host + "/project/posts?" + postID;
 	window.open(url);
 }
 

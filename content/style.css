@@ -37,6 +37,30 @@
     cursor: pointer;
 }
 
+ul#messages li {
+    display: block;
+    width: 80%;
+    margin: 5px auto;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+ul#messages li.info {
+    background: #7f7;
+}
+
+ul#messages li.error {
+    background: #d00;
+    color: white;
+}
+
+.validation-error {
+    vertical-align: top;
+    margin-left: 10px;
+    color: red;
+}
+
 #searchButton {
     height: 25px;
     width: 25px;
@@ -91,6 +115,7 @@ a:visited {
 }
 
 .dropdown-content {
+	width:120px;
     display: none;
     position: absolute;
     background-color: #f9f9f9;

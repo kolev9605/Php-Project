@@ -32,20 +32,18 @@ class PostsController extends BaseController
 			}
 			// Check if image file is a actual image or fake image
 			if(isset($_POST["submit"]) && strlen(basename( $_FILES["fileToUpload"]["name"])) > 0 && $uploadOk) {
+	
 				$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+				echo "TEST";
 				if($check !== false) {
-					echo $_POST["submit"];
 					$uploadOk = 1;
 				} else {
-					$this->setValidationError("fileToUpload", "File is not an image.");
+					$this->addErrorMessage("File is too big or not an image. Please upload files smaller than 2 MB.");
 					$uploadOk = 0;
 				}
 			}
 			// Check if $uploadOk is set to 0 by an error
-			if ($uploadOk == 0) {
-				$this->setValidationError("fileToUpload", "Sorry, your file was not uploaded.");
-			// if everything is ok, try to upload file
-			} else {
+			if ($uploadOk == 1) {
 				if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 					$imageSrc = $index . basename( $_FILES["fileToUpload"]["name"]);
 					if($this->formValid()) {
@@ -60,6 +58,10 @@ class PostsController extends BaseController
 				} else {
 					$this->setValidationError("imageLocation", "Sorry there was an error uploading your message");
 				}
+			}
+			else
+			{
+				$this->redirect("posts", "create");
 			}
 		}
     }
