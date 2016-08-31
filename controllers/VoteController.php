@@ -67,6 +67,6 @@ class VoteController extends BaseController
 			$this->model->removeVote($post, $loggedUser);
 		}
 		
-		echo $newVotes . "\n";
+		echo $newVotes;
     }
 }

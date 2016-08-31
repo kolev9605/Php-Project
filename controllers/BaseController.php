@@ -43,7 +43,7 @@ abstract class BaseController
 
     public function renderView(string $viewName = null, bool $includeLayout = true)
     {
-        if (!$this->isViewRendered) {
+        if (!$this->isViewRendered && !isset($_POST['doNotRender'])) {
             ob_start();
             if ($viewName == null) {
                 $viewName = $this->actionName;

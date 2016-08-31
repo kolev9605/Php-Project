@@ -55,6 +55,6 @@ class CommentVoteController extends BaseController
 		
 		$newVotes = $this->model->getCommentVotes($comment['id']) + $voteChange;
 		$this->model->vote($comment, $isUpVote, $newVotes);
-		echo $newVotes . "\n";
+		echo $newVotes;
     }
 }
