@@ -29,7 +29,11 @@ class UsersModel extends BaseModel
 		{
 			if($vote['is_positive'])
 			{
-				$posts[] = $this->getPostFromVote($vote['post_id']);
+				$post = $this->getPostFromVote($vote['post_id']);
+				if($post)
+				{
+					$posts[] = $post;
+				}
 			}
 		}
         return $posts;

@@ -63,20 +63,20 @@ $buttonIndex = 0;
 		$likedPostsIndex = 0;
 		$likedPostsStartingLenght = 5;
 		$this->showPosts($this->likedPosts, $likedPostsIndex, $likedPostsStartIndex, $likedPostsStartingLenght, "userPostContainer", false);
-		if(count($this->userPosts) - $likedPostsStartingLenght > 0)
+		if(count($this->likedPosts) - $likedPostsStartingLenght > 0)
 		{
 			$this->showPosts(
 				$this->likedPosts, 
 				$likedPostsIndex,
 				$likedPostsStartIndex,
-				count($this->userPosts) - $likedPostsStartingLenght, 
+				count($this->likedPosts) - $likedPostsStartingLenght, 
 				"hiddenLikedPostContainer",
 				false); 
 		} ?>
 	</article>
 	
 	<?php 
-	if(count($this->userPosts) - $likedPostsStartingLenght > 0) : ?>
+	if(count($this->likedPosts) - $likedPostsStartingLenght > 0) : ?>
 		<div class = "show-hidden-posts-button-container">
 			<button class = "show-hidden-posts-button" onclick = 'showAllPosts("hiddenLikedPostContainer", <?php echo $buttonIndex ?>);'
 			 id = "show-hidden-posts-button_<?php echo $buttonIndex ?>">

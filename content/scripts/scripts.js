@@ -51,7 +51,8 @@ function showPosts(onScrollDown = false) {
 				url: '',
 				data: {
 					index: index,
-					startIndex: startIndex
+					startIndex: startIndex,
+					doNotRender: true
 				},
 				success: function( data ) {
 					if (!(typeof $(data).find(".indexValue").attr("id") === "undefined")) {
@@ -90,10 +91,11 @@ function vote(loggedIn, loginPage, voteObject, loggedUser, isUpVote, voteNumberI
 		  {
 			voteObject: voteObject,
 			loggedUser: loggedUser,
-			isUpVote: isUpVote
+			isUpVote: isUpVote,
+			doNotRender: true
 		  }
 		}).done(function( msg ) {
-			$("#" + voteNumberID).text(msg.substr(0, msg.indexOf('\n')));
+			$("#" + voteNumberID).text(msg);
 			if(isUpVote && $("#upArrow_" + index).attr("src") == imagesFolder + "upvote-arrow.png")
 			{
 				$("#upArrow_" + index).attr("src", imagesFolder + "arrow-rotated.png");
@@ -128,7 +130,8 @@ function addComment(post)
 		  data:
 		  {
 			post: post,
-			content: content
+			content: content,
+			doNotRender: true
 		  }
 		}).done(function( msg ) {
 			location.reload();
@@ -159,7 +162,8 @@ function followUser(followedUserId)
 		  url: "followUser",
 		  data:
 		  {
-			followedUserId: followedUserId
+			followedUserId: followedUserId,
+			doNotRender: true
 		  }
 		}).done(function( msg ) {
 			location.reload();
@@ -173,7 +177,8 @@ function unfollowUser(followedUserId)
 		  url: "unfollowUser",
 		  data:
 		  {
-			followedUserId: followedUserId
+			followedUserId: followedUserId,
+			doNotRender: true
 		  }
 		}).done(function( msg ) {
 			location.reload();
@@ -189,7 +194,8 @@ function addConversationComment(conversation)
 		  data:
 		  {
 			conversation: conversation,
-			content: content
+			content: content,
+			doNotRender: true
 		  }
 		}).done(function( msg ) {
 			location.reload();
@@ -223,10 +229,11 @@ function autocomplete(value)
 			  data:
 			  {
 				ignoredNames: arrayOfNames,
-				value: currentName
+				value: currentName,
+				doNotRender: true
 			  }
 		}).done(function(msg) {
-			result = msg.substr(0, msg.indexOf('<!DOCTYPE'));
+			result = msg;
 			if(result == "")
 			{
 				$('#participent-dropdown-content').css("display", "none");
@@ -284,10 +291,11 @@ function searchAutocomplete(value) {
 			  {
 				ignoredNames: arrayNames,
 				value: currentName,
-				isSearch: true
+				isSearch: true,
+				doNotRender: true
 			  }
 		}).done(function(msg) {
-			result = msg.substr(0, msg.indexOf('<!DOCTYPE'));
+			result = msg;
 			if(result == "")
 			{
 				$('#search-dropdown-content').css("display", "none");

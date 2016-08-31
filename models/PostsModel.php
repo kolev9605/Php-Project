@@ -34,10 +34,6 @@ class PostsModel extends ShowVoteModel
 			"DELETE FROM posts WHERE id = ?");
 		$statement->bind_param("i", $id);
 		$statement->execute();
-		$statementVote = self::$db->prepare(
-			"DELETE FROM votes WHERE votes.comment_id = ?");
-		$statementVote->bind_param("i", $id);
-		$statementVote->execute();
 		return $statement->affected_rows == 1;
     }
 	
