@@ -21,8 +21,13 @@ class UsersController extends BaseController
             }
 
             $password = $_POST['register-password'];
+            $confirmedPassword = $_POST['confirmed-password'];
             if (strlen($password) < 2 || strlen($password) > 50) {
                 $this->setValidationError("register-password", "Invalid password!");
+            }
+			
+            if ($password != $confirmedPassword) {
+                $this->setValidationError("confirmed-password", "Invalid password! Passwords do not match!");
             }
 
             if ($this->formValid()) {

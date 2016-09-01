@@ -52,7 +52,6 @@ function showPosts(onScrollDown = false) {
 				data: {
 					index: index,
 					startIndex: startIndex,
-					doNotRender: true
 				},
 				success: function( data ) {
 					if (!(typeof $(data).find(".indexValue").attr("id") === "undefined")) {
